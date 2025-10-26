@@ -34,7 +34,7 @@ export const WishlistPanel = ({ isOpen, onClose }: WishlistPanelProps) => {
           </button>
         </div>
       ) : (
-        <div className="flex flex-col" style={{ height: 'calc(100vh - 89px)' }}>
+        <div className="flex flex-col h-full">
           <div className="flex-1 overflow-y-auto px-6 py-4 min-h-0">
             <div className="space-y-4 pb-4">
               {wishlistProducts.map((product) => (

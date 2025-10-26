@@ -41,7 +41,7 @@ export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
 
   return (
     <SlideOutPanel isOpen={isOpen} onClose={onClose} title={`Shopping Bag (${cartCount})`}>
-      <div className="flex flex-col" style={{ height: 'calc(100vh - 89px)' }}>
+      <div className="flex flex-col h-full">
         <div className="flex-1 overflow-y-auto px-6 py-4 min-h-0">
           <div className="space-y-6 pb-4">
             {cartItems.map((item) => (
