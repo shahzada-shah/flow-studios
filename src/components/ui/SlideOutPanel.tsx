@@ -39,7 +39,7 @@ export const SlideOutPanel = ({ isOpen, onClose, title, children }: SlideOutPane
     <>
       {/* Backdrop with smooth fade */}
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] transition-opacity duration-400 ease-in-out ${
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-all duration-400 ease-in-out ${
           isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
@@ -47,11 +47,11 @@ export const SlideOutPanel = ({ isOpen, onClose, title, children }: SlideOutPane
 
       {/* Slide-out panel with smooth translation */}
       <div
-        className={`fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-[70] transition-transform duration-400 ease-in-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform transition-all duration-400 ease-in-out ${
+          isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
         }`}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full overflow-hidden">
           {/* Header */}
           <div className="flex-shrink-0 flex items-center justify-between p-6 border-b border-gray-200">
             <h2 className="text-2xl font-serif tracking-wide">{title}</h2>
@@ -64,8 +64,10 @@ export const SlideOutPanel = ({ isOpen, onClose, title, children }: SlideOutPane
             </button>
           </div>
 
-          {/* Content area */}
-          <div className="flex-1 min-h-0 overflow-hidden">
+          {/* Content with stagger animation */}
+          <div className={`flex-1 min-h-0 overflow-hidden transition-all duration-300 delay-100 ${
+            isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}>
             {children}
           </div>
         </div>

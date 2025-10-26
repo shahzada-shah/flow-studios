@@ -24,7 +24,7 @@ export const MobileMenu = ({ isOpen, onClose, navigation }: MobileMenuProps) => 
   }, [isOpen])
 
   return (
-    <div className="fixed inset-0 z-[80] lg:hidden">
+    <div className="fixed inset-0 z-50 lg:hidden">
       {/* Backdrop with smooth fade */}
       <div
         className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-all duration-400 ease-in-out ${
