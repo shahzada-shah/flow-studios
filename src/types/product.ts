@@ -14,12 +14,13 @@ export interface Product {
   price: number
   category_id: string | null
   color: string
-  image_url: string
+  image_url: string | null
   sizes: string[]
   activities: string[]
   is_sustainable: boolean
   is_new: boolean
   in_stock: boolean
+  is_bestseller?: boolean
   created_at: string
   updated_at: string
 }

@@ -138,7 +138,7 @@ export const Bestsellers = () => {
                 </h3>
                 <p className="text-sm text-gray-500 font-light">{product.color}</p>
                 <p className="text-base font-medium text-gray-900 pt-0.5">
-                  {product.price} USD
+                  ${typeof product.price === 'number' ? product.price.toFixed(2) : product.price} USD
                 </p>
               </div>
             </Link>

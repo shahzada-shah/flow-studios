@@ -126,7 +126,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             {product.name}
           </h3>
           <p className="text-sm text-gray-600">{product.color}</p>
-          <p className="text-base font-medium text-gray-900">{product.price} USD</p>
+          <p className="text-base font-medium text-gray-900">${typeof product.price === 'number' ? product.price.toFixed(2) : product.price} USD</p>
         </div>
       </Link>
     </div>
