@@ -3,55 +3,15 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useWishlist } from '../../context/WishlistContext'
 import { useToast } from '../../context/ToastContext'
-
-interface Product {
-  id: number
-  name: string
-  slug: string
-  color: string
-  price: number
-  image: string
-}
-
-const products: Product[] = [
-  {
-    id: 1,
-    name: 'Crew Tank',
-    slug: 'crew-tank',
-    color: 'Black',
-    price: 100,
-    image: '',
-  },
-  {
-    id: 2,
-    name: 'UltraFlex Leggings',
-    slug: 'ultraflex-leggings',
-    color: 'Black',
-    price: 180,
-    image: '',
-  },
-  {
-    id: 3,
-    name: 'Sport Bra',
-    slug: 'sport-bra',
-    color: 'Black',
-    price: 80,
-    image: '',
-  },
-  {
-    id: 4,
-    name: 'Sport Half Zip',
-    slug: 'sport-half-zip',
-    color: 'Black',
-    price: 120,
-    image: '',
-  },
-]
+import { supabase } from '../../lib/supabase'
+import type { Product } from '../../types/product'
 
 export const Bestsellers = () => {
   const { toggleWishlist, isInWishlist } = useWishlist()
   const { showToast } = useToast()
   const [isVisible, setIsVisible] = useState(false)
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
   const sectionRef = useRef<HTMLElement>(null)
 
   const handleWishlistToggle = (e: React.MouseEvent, product: Product) => {
@@ -63,6 +23,27 @@ export const Bestsellers = () => {
       showToast(`Added ${product.name} to wishlist`, 'wishlist')
     }
   }
+
+  useEffect(() => {
+    const fetchBestsellers = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('is_bestseller', true)
+          .limit(4)
+
+        if (error) throw error
+        setProducts(data || [])
+      } catch (error) {
+        console.error('Error fetching bestsellers:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBestsellers()
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -95,8 +76,13 @@ export const Bestsellers = () => {
         BESTSELLERS
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {products.map((product, index) => (
+      {loading ? (
+        <div className="text-center text-gray-400 py-12">Loading bestsellers...</div>
+      ) : products.length === 0 ? (
+        <div className="text-center text-gray-400 py-12">No bestsellers available</div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {products.map((product, index) => (
           <div
             key={product.id}
             className={`group transition-all duration-700 ${
@@ -108,17 +94,25 @@ export const Bestsellers = () => {
           >
             <Link to={`/product/${product.slug}`}>
               <div className="relative overflow-hidden bg-gray-200 mb-4 aspect-[3/4] rounded-sm">
-              <div className="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
-                <div className="flex flex-col items-center gap-3 text-gray-400">
-                  <div className="border-4 border-dashed border-gray-400 rounded-lg p-6">
-                    <ImageIcon className="w-12 h-12" strokeWidth={1.5} />
+                {product.image_url ? (
+                  <img
+                    src={product.image_url}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+                    <div className="flex flex-col items-center gap-3 text-gray-400">
+                      <div className="border-4 border-dashed border-gray-400 rounded-lg p-6">
+                        <ImageIcon className="w-12 h-12" strokeWidth={1.5} />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm font-medium tracking-wider">PRODUCT IMAGE</p>
+                        <p className="text-xs tracking-wide mt-1">600 × 800</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <p className="text-sm font-medium tracking-wider">PRODUCT IMAGE</p>
-                    <p className="text-xs tracking-wide mt-1">600 × 800</p>
-                  </div>
-                </div>
-              </div>
+                )}
 
               <button
                 onClick={(e) => handleWishlistToggle(e, product)}
@@ -149,8 +143,9 @@ export const Bestsellers = () => {
               </div>
             </Link>
           </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   )
 }
