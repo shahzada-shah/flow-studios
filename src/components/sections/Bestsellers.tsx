@@ -92,8 +92,8 @@ export const Bestsellers = () => {
               transitionDelay: `${index * 0.15}s`,
             }}
           >
-            <Link to={`/product/${product.slug}`}>
-              <div className="relative overflow-hidden bg-gray-200 mb-4 aspect-[3/4] rounded-sm">
+            <div className="relative overflow-hidden bg-gray-200 mb-4 aspect-[3/4] rounded-sm">
+              <Link to={`/product/${product.slug}`}>
                 {product.image_url ? (
                   <img
                     src={product.image_url}
@@ -113,6 +113,7 @@ export const Bestsellers = () => {
                     </div>
                   </div>
                 )}
+              </Link>
 
               <button
                 onClick={(e) => handleWishlistToggle(e, product)}
@@ -129,7 +130,6 @@ export const Bestsellers = () => {
                 />
               </button>
             </div>
-            </Link>
 
             <Link to={`/product/${product.slug}`}>
               <div className="space-y-2">
