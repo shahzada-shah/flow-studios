@@ -80,7 +80,7 @@ export const NavigationDropdown = ({ item, isOpen: controlledIsOpen, onToggle, o
 
       {(isOpen || isClosing) && (
         <div
-          className={`absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 shadow-xl rounded-lg overflow-hidden ${
+          className={`absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 shadow-xl rounded-lg overflow-hidden z-50 ${
             isClosing ? 'animate-fadeOut' : 'animate-fadeIn'
           }`}
           style={{ animationFillMode: 'forwards' }}

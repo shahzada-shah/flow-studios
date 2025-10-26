@@ -59,7 +59,7 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 transition-all duration-400 ease-in-out ${
+      className={`fixed inset-0 z-[80] transition-all duration-400 ease-in-out ${
         isClosing ? 'opacity-0' : 'opacity-100'
       }`}
     >
