@@ -7,44 +7,37 @@
  * Features:
  * - Toggle products in/out of wishlist
  * - Remove products from wishlist
+ * - Clear all wishlist items
  * - Check if product is in wishlist
  * - Get all wishlist products
  *
- * Note: Uses numeric product IDs. Convert string IDs before use.
+ * Note: Uses string product IDs matching the Product type from database
  *
  * @context
  * @example
  * ```tsx
  * const { isInWishlist, toggleWishlist } = useWishlist()
- * const productId = parseInt(product.id)
- * const inWishlist = isInWishlist(productId)
+ * const inWishlist = isInWishlist(product.id)
  * ```
  */
 
 import { createContext, useContext, useState, ReactNode } from 'react'
-
-interface Product {
-  id: number
-  name: string
-  color: string
-  price: number
-  image: string
-}
+import type { Product } from '../types/product'
 
 interface WishlistContextType {
-  wishlist: Set<number>
+  wishlist: Set<string>
   products: Product[]
   toggleWishlist: (product: Product) => void
-  removeFromWishlist: (productId: number) => void
+  removeFromWishlist: (productId: string) => void
   clearWishlist: () => void
-  isInWishlist: (productId: number) => boolean
+  isInWishlist: (productId: string) => boolean
   getWishlistProducts: () => Product[]
 }
 
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined)
 
 export const WishlistProvider = ({ children }: { children: ReactNode }) => {
-  const [wishlist, setWishlist] = useState<Set<number>>(new Set())
+  const [wishlist, setWishlist] = useState<Set<string>>(new Set())
   const [products, setProducts] = useState<Product[]>([])
 
   /**
@@ -67,9 +60,9 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
 
   /**
    * Remove a product from wishlist
-   * @param productId - Numeric product ID
+   * @param productId - String product ID
    */
-  const removeFromWishlist = (productId: number) => {
+  const removeFromWishlist = (productId: string) => {
     setWishlist((prev) => {
       const newSet = new Set(prev)
       newSet.delete(productId)
@@ -86,7 +79,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
     setProducts([])
   }
 
-  const isInWishlist = (productId: number) => wishlist.has(productId)
+  const isInWishlist = (productId: string) => wishlist.has(productId)
 
   const getWishlistProducts = () => products
 
