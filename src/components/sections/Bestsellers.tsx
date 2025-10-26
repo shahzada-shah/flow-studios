@@ -1,28 +1,14 @@
-import { Heart, ImageIcon } from 'lucide-react'
+import { ImageIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useWishlist } from '../../context/WishlistContext'
-import { useToast } from '../../context/ToastContext'
 import { supabase } from '../../lib/supabase'
 import type { Product } from '../../types/product'
 
 export const Bestsellers = () => {
-  const { toggleWishlist, isInWishlist } = useWishlist()
-  const { showToast } = useToast()
   const [isVisible, setIsVisible] = useState(false)
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const sectionRef = useRef<HTMLElement>(null)
-
-  const handleWishlistToggle = (e: React.MouseEvent, product: Product) => {
-    e.preventDefault()
-    e.stopPropagation()
-    const wasInWishlist = isInWishlist(product.id)
-    toggleWishlist(product)
-    if (!wasInWishlist) {
-      showToast(`Added ${product.name} to wishlist`, 'wishlist')
-    }
-  }
 
   useEffect(() => {
     const fetchBestsellers = async () => {
@@ -92,8 +78,8 @@ export const Bestsellers = () => {
               transitionDelay: `${index * 0.15}s`,
             }}
           >
-            <div className="relative overflow-hidden bg-gray-200 mb-4 aspect-[3/4] rounded-sm">
-              <Link to={`/product/${product.slug}`}>
+            <Link to={`/product/${product.slug}`}>
+              <div className="relative overflow-hidden bg-gray-200 mb-4 aspect-[3/4] rounded-sm">
                 {product.image_url ? (
                   <img
                     src={product.image_url}
@@ -113,23 +99,8 @@ export const Bestsellers = () => {
                     </div>
                   </div>
                 )}
-              </Link>
-
-              <button
-                onClick={(e) => handleWishlistToggle(e, product)}
-                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-full transition-all duration-200 hover:scale-105 z-10"
-                aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
-              >
-                <Heart
-                  className={`w-5 h-5 transition-all duration-200 ${
-                    isInWishlist(product.id)
-                      ? 'fill-gray-900 text-gray-900 scale-110'
-                      : 'text-gray-900 fill-transparent'
-                  }`}
-                  strokeWidth={1.5}
-                />
-              </button>
-            </div>
+              </div>
+            </Link>
 
             <Link to={`/product/${product.slug}`}>
               <div className="space-y-2">
