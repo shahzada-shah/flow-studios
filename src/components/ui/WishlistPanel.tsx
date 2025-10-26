@@ -43,11 +43,17 @@ export const WishlistPanel = ({ isOpen, onClose }: WishlistPanelProps) => {
                   className="flex gap-4 pb-4 border-b border-gray-200 group animate-fadeIn"
                 >
                   <div className="relative w-24 h-32 bg-gray-200 rounded-sm flex-shrink-0 overflow-hidden">
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="flex flex-col items-center gap-2 text-gray-400">
-                        <ImageIcon className="w-8 h-8" strokeWidth={1.5} />
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <ImageIcon className="w-8 h-8 text-gray-400" strokeWidth={1.5} />
                       </div>
-                    </div>
+                    )}
                   </div>
 
                   <div className="flex-1 flex flex-col justify-between">
