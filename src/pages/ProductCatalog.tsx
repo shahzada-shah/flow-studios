@@ -1,0 +1,194 @@
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { FilterPanel } from '../components/products/FilterPanel'
+import { ProductCard } from '../components/products/ProductCard'
+import { supabase } from '../lib/supabase'
+import type { Product, ProductFilters } from '../types/product'
+
+export const ProductCatalog = () => {
+  const { category } = useParams<{ category: string }>()
+  const [products, setProducts] = useState<Product[]>([])
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [filters, setFilters] = useState<ProductFilters>({
+    categories: category ? [category] : [],
+    sizes: [],
+    colors: [],
+    activities: [],
+    priceRange: null,
+    sustainable: false,
+    newArrivals: false,
+    sortBy: 'newest',
+  })
+
+  useEffect(() => {
+    fetchProducts()
+  }, [])
+
+  useEffect(() => {
+    applyFilters()
+  }, [products, filters])
+
+  const fetchProducts = async () => {
+    try {
+      setIsLoading(true)
+      const { data, error } = await supabase
+        .from('products')
+        .select(`
+          *,
+          categories!inner(slug)
+        `)
+        .eq('in_stock', true)
+
+      if (error) throw error
+      setProducts(data || [])
+    } catch (error) {
+      console.error('Error fetching products:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const applyFilters = () => {
+    let filtered = [...products]
+
+    if (filters.categories.length > 0) {
+      filtered = filtered.filter((product) => {
+        const categorySlug = (product as any).categories?.slug
+        return filters.categories.some((cat) => categorySlug === cat)
+      })
+    }
+
+    if (filters.sizes.length > 0) {
+      filtered = filtered.filter((product) =>
+        product.sizes.some((size) => filters.sizes.includes(size))
+      )
+    }
+
+    if (filters.colors.length > 0) {
+      filtered = filtered.filter((product) => filters.colors.includes(product.color))
+    }
+
+    if (filters.activities.length > 0) {
+      filtered = filtered.filter((product) =>
+        product.activities.some((activity) => filters.activities.includes(activity))
+      )
+    }
+
+    if (filters.sustainable) {
+      filtered = filtered.filter((product) => product.is_sustainable)
+    }
+
+    if (filters.newArrivals) {
+      filtered = filtered.filter((product) => product.is_new)
+    }
+
+    switch (filters.sortBy) {
+      case 'price-low':
+        filtered.sort((a, b) => a.price - b.price)
+        break
+      case 'price-high':
+        filtered.sort((a, b) => b.price - a.price)
+        break
+      case 'newest':
+        filtered.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+        break
+    }
+
+    setFilteredProducts(filtered)
+  }
+
+  const activeFilterCount = [
+    ...filters.categories,
+    ...filters.sizes,
+    ...filters.colors,
+    ...filters.activities,
+  ].length + (filters.sustainable ? 1 : 0) + (filters.newArrivals ? 1 : 0)
+
+  const getCategoryTitle = () => {
+    if (!category) return 'All Products'
+    return category
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      <FilterPanel
+        isOpen={isFilterOpen}
+        onClose={() => setIsFilterOpen(false)}
+        filters={filters}
+        onFiltersChange={setFilters}
+        activeFilterCount={activeFilterCount}
+      />
+
+      <div className="max-w-[1600px] mx-auto px-8 py-12">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-serif tracking-wide text-gray-900 mb-2 font-light">
+              {getCategoryTitle()}
+            </h1>
+            <button
+              onClick={() => setIsFilterOpen(true)}
+              className="text-sm font-medium tracking-wider text-gray-900 hover:text-gray-600 transition-colors duration-200 underline underline-offset-4"
+            >
+              FILTERS {activeFilterCount > 0 && `(${activeFilterCount})`}
+            </button>
+          </div>
+
+          <p className="text-sm text-gray-600">
+            Showing {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
+          </p>
+        </div>
+
+        {isLoading ? (
+          <div className="flex items-center justify-center py-24">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mb-4"></div>
+              <p className="text-sm text-gray-600 tracking-wide">Loading products...</p>
+            </div>
+          </div>
+        ) : filteredProducts.length === 0 ? (
+          <div className="text-center py-24">
+            <p className="text-lg text-gray-600 mb-4">No products found</p>
+            <button
+              onClick={() =>
+                setFilters({
+                  categories: [],
+                  sizes: [],
+                  colors: [],
+                  activities: [],
+                  priceRange: null,
+                  sustainable: false,
+                  newArrivals: false,
+                  sortBy: 'newest',
+                })
+              }
+              className="text-sm font-medium tracking-wider text-gray-900 hover:text-gray-600 transition-colors duration-200 underline underline-offset-4"
+            >
+              CLEAR FILTERS
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+
+            {filteredProducts.length >= 12 && (
+              <div className="flex justify-center">
+                <button className="px-16 py-4 border border-gray-900 text-gray-900 text-sm font-medium tracking-wider hover:bg-gray-900 hover:text-white transition-all duration-200">
+                  LOAD MORE
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
