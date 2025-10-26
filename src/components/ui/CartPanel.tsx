@@ -30,7 +30,7 @@ export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
           </p>
           <button
             onClick={onClose}
-            className="bg-gray-900 text-white px-8 py-3 text-sm font-semibold tracking-wider hover:bg-gray-800 transition-colors duration-200"
+            className="bg-gray-900 text-white px-8 py-3 text-sm font-semibold tracking-wider hover:bg-gray-800 transition-colors duration-200 cursor-pointer"
           >
             CONTINUE SHOPPING
           </button>
@@ -69,7 +69,7 @@ export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                     </div>
                     <button
                       onClick={() => removeFromCart(item.product.id, item.size)}
-                      className="text-gray-400 hover:text-gray-600 transition-colors duration-150"
+                      className="text-gray-400 hover:text-gray-600 transition-colors duration-150 cursor-pointer"
                       aria-label="Remove item"
                     >
                       <X className="w-5 h-5" />
@@ -80,7 +80,7 @@ export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() => updateQuantity(item.product.id, item.size, item.quantity - 1)}
-                        className="w-8 h-8 flex items-center justify-center border border-gray-300 hover:bg-gray-100 transition-colors duration-150"
+                        className="w-8 h-8 flex items-center justify-center border border-gray-300 hover:bg-gray-100 transition-colors duration-150 cursor-pointer"
                         aria-label="Decrease quantity"
                       >
                         <Minus className="w-4 h-4" />
@@ -88,7 +88,7 @@ export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                       <span className="text-sm font-medium w-8 text-center">{item.quantity}</span>
                       <button
                         onClick={() => updateQuantity(item.product.id, item.size, item.quantity + 1)}
-                        className="w-8 h-8 flex items-center justify-center border border-gray-300 hover:bg-gray-100 transition-colors duration-150"
+                        className="w-8 h-8 flex items-center justify-center border border-gray-300 hover:bg-gray-100 transition-colors duration-150 cursor-pointer"
                         aria-label="Increase quantity"
                       >
                         <Plus className="w-4 h-4" />
@@ -112,13 +112,13 @@ export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
           <p className="text-xs text-gray-500">Shipping and taxes calculated at checkout</p>
           <button
             onClick={handleCheckout}
-            className="w-full bg-gray-900 text-white py-4 text-sm font-medium tracking-wider hover:bg-gray-800 transition-colors duration-200"
+            className="w-full bg-gray-900 text-white py-4 text-sm font-medium tracking-wider hover:bg-gray-800 transition-colors duration-200 cursor-pointer"
           >
             CHECKOUT
           </button>
           <button
             onClick={onClose}
-            className="w-full border border-gray-900 text-gray-900 py-4 text-sm font-medium tracking-wider hover:bg-gray-50 transition-colors duration-200"
+            className="w-full border border-gray-900 text-gray-900 py-4 text-sm font-medium tracking-wider hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
           >
             CONTINUE SHOPPING
           </button>
