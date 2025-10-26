@@ -36,6 +36,7 @@ interface WishlistContextType {
   products: Product[]
   toggleWishlist: (product: Product) => void
   removeFromWishlist: (productId: number) => void
+  clearWishlist: () => void
   isInWishlist: (productId: number) => boolean
   getWishlistProducts: () => Product[]
 }
@@ -77,6 +78,14 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
     setProducts((prevProducts) => prevProducts.filter((p) => p.id !== productId))
   }
 
+  /**
+   * Clear all items from wishlist
+   */
+  const clearWishlist = () => {
+    setWishlist(new Set())
+    setProducts([])
+  }
+
   const isInWishlist = (productId: number) => wishlist.has(productId)
 
   const getWishlistProducts = () => products
@@ -88,6 +97,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
         products,
         toggleWishlist,
         removeFromWishlist,
+        clearWishlist,
         isInWishlist,
         getWishlistProducts,
       }}
