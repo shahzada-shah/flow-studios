@@ -52,7 +52,13 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
         setProducts((prevProducts) => prevProducts.filter((p) => p.id !== product.id))
       } else {
         newSet.add(product.id)
-        setProducts((prevProducts) => [...prevProducts, product])
+        setProducts((prevProducts) => {
+          const exists = prevProducts.some((p) => p.id === product.id)
+          if (exists) {
+            return prevProducts
+          }
+          return [...prevProducts, product]
+        })
       }
       return newSet
     })
