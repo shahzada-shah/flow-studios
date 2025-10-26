@@ -41,9 +41,9 @@ export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
 
   return (
     <SlideOutPanel isOpen={isOpen} onClose={onClose} title={`Shopping Bag (${cartCount})`}>
-      <div className="flex flex-col h-full">
-        <div className="flex-1 overflow-y-auto px-6 py-4">
-          <div className="space-y-6">
+      <div className="flex flex-col" style={{ height: 'calc(100vh - 89px)' }}>
+        <div className="flex-1 overflow-y-auto px-6 py-4 min-h-0">
+          <div className="space-y-6 pb-4">
             {cartItems.map((item) => (
               <div key={`${item.product.id}-${item.size}`} className="flex gap-4">
                 <div className="w-24 h-32 bg-gray-200 rounded-sm overflow-hidden flex-shrink-0">
@@ -104,7 +104,7 @@ export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
           </div>
         </div>
 
-        <div className="flex-shrink-0 border-t border-gray-200 p-6 space-y-4 bg-white">
+        <div className="flex-shrink-0 border-t border-gray-200 p-6 space-y-3 bg-white shadow-lg">
           <div className="flex justify-between text-base">
             <span className="font-medium text-gray-900">Subtotal</span>
             <span className="font-medium text-gray-900">${cartTotal.toFixed(2)} USD</span>
