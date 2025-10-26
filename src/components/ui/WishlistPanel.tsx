@@ -25,10 +25,9 @@ interface WishlistPanelProps {
  */
 export const WishlistPanel = ({ isOpen, onClose }: WishlistPanelProps) => {
   const navigate = useNavigate()
-  const { getWishlistProducts, removeFromWishlist, clearWishlist } = useWishlist()
+  const { products: wishlistProducts, removeFromWishlist, clearWishlist } = useWishlist()
   const { addToCart } = useCart()
   const { showToast } = useToast()
-  const wishlistProducts = getWishlistProducts()
 
   const handleAddAllToBag = () => {
     let addedCount = 0
