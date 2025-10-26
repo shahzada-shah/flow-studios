@@ -9,7 +9,16 @@ interface WishlistPanelProps {
 
 /**
  * Wishlist panel component
- * Displays saved items and quick add to cart functionality
+ * Extends SlideOutPanel to display saved/favorited items
+ *
+ * Features:
+ * - Grid display of wishlist items
+ * - Remove from wishlist functionality
+ * - Empty state with call-to-action
+ * - Product details preview
+ * - Future: Add all to cart functionality
+ *
+ * Layout uses fixed height calculation to accommodate header
  */
 export const WishlistPanel = ({ isOpen, onClose }: WishlistPanelProps) => {
   const { getWishlistProducts, removeFromWishlist } = useWishlist()

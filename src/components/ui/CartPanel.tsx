@@ -8,6 +8,20 @@ interface CartPanelProps {
   onClose: () => void
 }
 
+/**
+ * Shopping cart panel component
+ * Extends SlideOutPanel to display cart items with checkout functionality
+ *
+ * Features:
+ * - Cart item display with images and details
+ * - Quantity adjustment controls
+ * - Remove item functionality
+ * - Subtotal calculation
+ * - Checkout navigation
+ * - Empty state with call-to-action
+ *
+ * Layout uses fixed height calculation to accommodate header
+ */
 export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
   const navigate = useNavigate()
   const { cartItems, removeFromCart, updateQuantity, cartTotal, cartCount } = useCart()

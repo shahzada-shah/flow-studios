@@ -7,8 +7,22 @@ interface SearchModalProps {
 }
 
 /**
- * Full-screen search modal with smooth animations
- * Features auto-focus, escape key handling, and exit animations
+ * Full-screen search modal component
+ * Independent modal implementation (not a slide-out panel)
+ *
+ * Why separate from SlideOutPanel:
+ * - Full-screen overlay vs side panel
+ * - Centered content with slide-down animation
+ * - Different interaction pattern
+ *
+ * Features:
+ * - Full-screen backdrop with blur
+ * - Centered search box with slide-down animation
+ * - Auto-focus on input field
+ * - ESC key to close
+ * - Popular search suggestions
+ * - Smooth exit animations with state management
+ * - Body scroll lock when open
  */
 export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
   const inputRef = useRef<HTMLInputElement>(null)

@@ -9,8 +9,20 @@ interface MobileMenuProps {
 }
 
 /**
- * Mobile navigation menu with slide-in animation
- * Features expandable submenus and smooth transitions
+ * Mobile navigation menu component
+ * Independent implementation that slides in from the LEFT
+ *
+ * Why separate from SlideOutPanel:
+ * - Different slide direction (left vs right)
+ * - Mobile-only visibility (hidden on lg+ breakpoints)
+ * - Navigation-specific structure and behavior
+ *
+ * Features:
+ * - Slides from left with 400ms transitions
+ * - Navigation items with submenu indicators
+ * - Backdrop with blur effect
+ * - Body scroll lock when open
+ * - Sign-in call-to-action in footer
  */
 export const MobileMenu = ({ isOpen, onClose, navigation }: MobileMenuProps) => {
   useEffect(() => {
