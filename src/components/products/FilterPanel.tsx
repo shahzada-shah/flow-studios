@@ -126,7 +126,7 @@ export const FilterPanel = ({ isOpen, onClose, filters, onFiltersChange, activeF
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-black/20 z-[55] transition-opacity duration-200 ${
+        className={`fixed inset-0 bg-black/20 z-40 transition-opacity duration-200 ${
           isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
@@ -134,7 +134,7 @@ export const FilterPanel = ({ isOpen, onClose, filters, onFiltersChange, activeF
 
       {/* Filter Panel */}
       <aside
-        className={`fixed top-0 left-0 h-full w-[400px] bg-white shadow-2xl z-[56] transform transition-all duration-400 ease-in-out ${
+        className={`fixed top-0 left-0 h-full w-[400px] bg-white shadow-2xl z-50 transform transition-all duration-400 ease-in-out ${
           isOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'
         }`}
       >

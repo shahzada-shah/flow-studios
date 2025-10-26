@@ -34,7 +34,7 @@ export const WishlistPanel = ({ isOpen, onClose }: WishlistPanelProps) => {
           </button>
         </div>
       ) : (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col" style={{ height: 'calc(100vh - 89px)' }}>
           <div className="flex-1 overflow-y-auto px-6 py-4 min-h-0">
             <div className="space-y-4 pb-4">
               {wishlistProducts.map((product) => (
@@ -43,17 +43,11 @@ export const WishlistPanel = ({ isOpen, onClose }: WishlistPanelProps) => {
                   className="flex gap-4 pb-4 border-b border-gray-200 group animate-fadeIn"
                 >
                   <div className="relative w-24 h-32 bg-gray-200 rounded-sm flex-shrink-0 overflow-hidden">
-                    {product.image ? (
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <ImageIcon className="w-8 h-8 text-gray-400" strokeWidth={1.5} />
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="flex flex-col items-center gap-2 text-gray-400">
+                        <ImageIcon className="w-8 h-8" strokeWidth={1.5} />
                       </div>
-                    )}
+                    </div>
                   </div>
 
                   <div className="flex-1 flex flex-col justify-between">
