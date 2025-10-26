@@ -31,7 +31,7 @@ interface CartItem {
 
 interface CartContextType {
   cartItems: CartItem[]
-  addToCart: (productId: string, size: string, quantity?: number) => Promise<void>
+  addToCart: (productOrId: Product | string, size: string, quantity?: number) => Promise<void>
   removeFromCart: (productId: string, size: string) => void
   updateQuantity: (productId: string, size: string, quantity: number) => void
   clearCart: () => void
@@ -46,38 +46,43 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   /**
    * Add a product to the cart
-   * @param productId - Product ID to add
+   * @param productOrId - Product object or Product ID to add
    * @param size - Selected size
    * @param quantity - Number of items to add (default: 1)
    */
-  const addToCart = async (productId: string, size: string, quantity: number = 1) => {
+  const addToCart = async (productOrId: Product | string, size: string, quantity: number = 1) => {
     try {
-      const { data: product, error } = await supabase
-        .from('products')
-        .select(`
-          *,
-          categories!inner(slug)
-        `)
-        .eq('id', productId)
-        .maybeSingle()
+      let product: Product | null = null
 
-      if (error) throw error
+      if (typeof productOrId === 'string') {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('id', productOrId)
+          .maybeSingle()
+
+        if (error) throw error
+        product = data
+      } else {
+        product = productOrId
+      }
+
       if (!product) return
 
       setCartItems((prev) => {
         const existingItem = prev.find(
-          (item) => item.product.id === productId && item.size === size
+          (item) => item.product.id === product!.id && item.size === size
         )
 
         if (existingItem) {
           return prev.map((item) =>
-            item.product.id === productId && item.size === size
+            item.product.id === product!.id && item.size === size
               ? { ...item, quantity: item.quantity + quantity }
               : item
           )
         }
 
-        return [...prev, { product, quantity, size }]
+        return [...prev, { product: product!, quantity, size }]
       })
     } catch (error) {
       console.error('Error adding to cart:', error)

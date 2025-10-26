@@ -93,28 +93,20 @@ export const ProductDetail = () => {
     )
   }
 
-  const productIdNumber = parseInt(product.id)
-  const isInWishlistState = isInWishlist(productIdNumber)
+  const isInWishlistState = isInWishlist(product.id)
 
   const handleAddToCart = () => {
     if (!selectedSize) {
       showToast('Please select a size', 'error')
       return
     }
-    addToCart(product.id, selectedSize)
+    addToCart(product, selectedSize)
     showToast(`Added ${product.name} to bag`, 'success')
   }
 
   const handleWishlistToggle = () => {
-    const productForWishlist = {
-      id: productIdNumber,
-      name: product.name,
-      color: product.color,
-      price: product.price,
-      image: product.image_url || '',
-    }
-    const wasInWishlist = isInWishlist(productIdNumber)
-    toggleWishlist(productForWishlist)
+    const wasInWishlist = isInWishlist(product.id)
+    toggleWishlist(product)
     if (!wasInWishlist) {
       showToast(`Added ${product.name} to wishlist`, 'wishlist')
     } else {
