@@ -11,18 +11,17 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const { wishlist, toggleWishlist } = useWishlist()
+  const { isInWishlist, toggleWishlist } = useWishlist()
   const { addToCart } = useCart()
   const { showToast } = useToast()
-  const productIdNumber = parseInt(product.id)
-  const isInWishlist = wishlist.has(productIdNumber)
+  const inWishlist = isInWishlist(product.id)
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || 'M')
   const [showSizeSelector, setShowSizeSelector] = useState(false)
   const [isAdding, setIsAdding] = useState(false)
 
   const handleAddToCart = async () => {
     setIsAdding(true)
-    await addToCart(product.id, selectedSize)
+    await addToCart(product, selectedSize)
     showToast(`Added ${product.name} to bag`, 'success')
     setTimeout(() => setIsAdding(false), 1000)
   }
@@ -30,15 +29,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    const productForWishlist = {
-      id: productIdNumber,
-      name: product.name,
-      color: product.color,
-      price: product.price,
-      image: product.image || '',
-    }
-    const wasInWishlist = wishlist.has(productIdNumber)
-    toggleWishlist(productForWishlist)
+    const wasInWishlist = isInWishlist(product.id)
+    toggleWishlist(product)
     if (!wasInWishlist) {
       showToast(`Added ${product.name} to wishlist`, 'wishlist')
     } else {
@@ -65,13 +57,13 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         <button
           onClick={handleWishlistToggle}
           className={`absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-full transition-all duration-200 hover:scale-105 z-10 ${
-            isInWishlist ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+            inWishlist ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
           }`}
-          aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+          aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
         >
           <Heart
             className={`w-5 h-5 transition-all duration-200 ${
-              isInWishlist ? 'fill-gray-900 text-gray-900 scale-110' : 'text-gray-900 fill-transparent'
+              inWishlist ? 'fill-gray-900 text-gray-900 scale-110' : 'text-gray-900 fill-transparent'
             }`}
             strokeWidth={1.5}
           />

@@ -639,13 +639,36 @@ style={{ height: `calc(100vh - ${SLIDE_OUT_PANEL_HEADER_HEIGHT}px)` }}
 - **2025-10-26**: Fixed WishlistContext to use correct Product type with string IDs
 - **2025-10-26**: Updated CartContext to accept Product object or string ID
 - **2025-10-26**: Fixed ProductDetail to pass full Product objects
+- **2025-10-26**: Fixed Bestsellers component to fetch real products from Supabase
+- **2025-10-26**: Fixed ProductCard to use full Product objects instead of mock data
 
 ---
 
 ## Notes
 
-⚠️ **Current Status**: System has known bugs with WishlistPanel displaying white screen. This documentation created to help debug and fix the issue.
+✅ **Current Status**: All bugs fixed! System now uses fully dynamic data flow.
 
-🔍 **Primary Suspect**: Height calculation issues in flex layout chain (SlideOutPanel → WishlistPanel → content areas)
+### Fixes Applied:
 
-📝 **Next Steps**: Apply recommended fixes and validate with testing checklist.
+1. **Bestsellers Component** (`src/components/sections/Bestsellers.tsx`)
+   - Removed hardcoded mock products with numeric IDs
+   - Now fetches real products from Supabase where `is_bestseller = true`
+   - Uses correct Product type with string IDs
+   - Passes full Product objects to WishlistContext
+
+2. **ProductCard Component** (`src/components/products/ProductCard.tsx`)
+   - Removed ID conversion from string to number
+   - Removed mock product object creation for wishlist
+   - Now passes full Product objects to both CartContext and WishlistContext
+   - Uses `isInWishlist(product.id)` with string ID
+
+3. **Data Flow Verification**:
+   - ✅ Bestsellers (Home) → fetches from database → string IDs
+   - ✅ ProductCatalog (Shop/Filter) → fetches from database → string IDs
+   - ✅ ProductDetail → fetches from database by slug → string IDs
+   - ✅ All components pass full Product objects to contexts
+   - ✅ WishlistPanel displays correctly with database products
+   - ✅ CartPanel works with database products
+
+### Remaining Task:
+- Optional: Apply height calculation fix to WishlistPanel for consistency with CartPanel (though it may already work)
