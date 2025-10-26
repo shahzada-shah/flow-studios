@@ -65,7 +65,7 @@ export const SlideOutPanel = ({ isOpen, onClose, title, children }: SlideOutPane
           </div>
 
           {/* Content with stagger animation */}
-          <div className={`flex-1 overflow-y-auto transition-all duration-300 delay-100 ${
+          <div className={`flex-1 overflow-hidden transition-all duration-300 delay-100 ${
             isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}>
             {children}
