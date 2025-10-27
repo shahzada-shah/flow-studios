@@ -64,34 +64,34 @@ const Footer = () => {
   }
 
   return (
-    <footer className="bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 transition-colors duration-200">
+    <footer className="bg-white border-t border-gray-200">
       <div className="max-w-[1600px] mx-auto px-8 py-16 lg:py-20">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-16">
           {/* Newsletter Section */}
           <div className="lg:col-span-5">
-            <h3 className="text-2xl lg:text-3xl font-light text-gray-900 dark:text-gray-100 mb-4 tracking-wide">
+            <h3 className="text-2xl lg:text-3xl font-light text-gray-900 mb-4 tracking-wide">
               Subscribe for Updates
             </h3>
-            <p className="text-base text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+            <p className="text-base text-gray-600 mb-8 leading-relaxed">
               Join our community for exclusive launches, wellness tips, and mindful movement inspiration.
             </p>
 
             <form onSubmit={handleSubmit} className="relative">
-              <div className="flex gap-0 border-b border-gray-900 dark:border-gray-100 transition-all duration-300 hover:border-gray-600 dark:hover:border-gray-400">
+              <div className="flex gap-0 border-b border-gray-900 transition-all duration-300 hover:border-gray-600">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email Address"
-                  className="flex-1 py-3 text-base text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-transparent focus:outline-none"
+                  className="flex-1 py-3 text-base text-gray-900 placeholder:text-gray-400 bg-transparent focus:outline-none"
                   required
                 />
                 <button
                   type="submit"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
-                  className="px-8 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm font-medium tracking-wider hover:bg-gray-800 dark:hover:bg-gray-200 transition-all duration-300 transform hover:scale-105"
+                  className="px-8 py-3 bg-gray-900 text-white text-sm font-medium tracking-wider hover:bg-gray-800 transition-all duration-300 transform hover:scale-105"
                 >
                   SUBSCRIBE
                 </button>
@@ -104,7 +104,7 @@ const Footer = () => {
                 <a
                   key={social.name}
                   href={social.href}
-                  className="group flex items-center gap-2 text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-colors duration-300"
+                  className="group flex items-center gap-2 text-gray-900 hover:text-gray-600 transition-colors duration-300"
                   aria-label={social.name}
                 >
                   <social.icon className="w-5 h-5 transform group-hover:scale-110 transition-transform duration-300" strokeWidth={1.5} />
@@ -120,7 +120,7 @@ const Footer = () => {
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-12 lg:gap-8">
             {footerColumns.map((column) => (
               <div key={column.title}>
-                <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 tracking-wider mb-6">
+                <h4 className="text-sm font-medium text-gray-900 tracking-wider mb-6">
                   {column.title}
                 </h4>
                 <ul className="space-y-4">
@@ -128,7 +128,7 @@ const Footer = () => {
                     <li key={link.label}>
                       <a
                         href={link.href}
-                        className="text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300 inline-block hover:translate-x-1 transform"
+                        className="text-base text-gray-600 hover:text-gray-900 transition-colors duration-300 inline-block hover:translate-x-1 transform"
                       >
                         {link.label}
                       </a>
@@ -141,16 +141,16 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-gray-200 dark:border-gray-800">
+        <div className="pt-8 border-t border-gray-200">
           <div className="flex items-center justify-between">
             {/* Credits Section */}
             <div className="flex-1">
-              <div className="text-sm text-gray-600 dark:text-gray-400 text-center lg:text-left">
+              <div className="text-sm text-gray-600 text-center lg:text-left">
                 <span>DEVELOPED BY </span>
                 <button
                   onMouseEnter={() => setShowCredits(true)}
                   onMouseLeave={() => setShowCredits(false)}
-                  className="font-medium text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-colors duration-300 tracking-wider"
+                  className="font-medium text-gray-900 hover:text-gray-600 transition-colors duration-300 tracking-wider"
                 >
                   KAZI DIGITAL STUDIO
                 </button>
@@ -158,19 +158,19 @@ const Footer = () => {
 
               {/* Credits Overlay */}
               <div
-                className={`mt-3 text-sm text-gray-500 dark:text-gray-500 transition-all duration-500 text-center lg:text-left ${
+                className={`mt-3 text-sm text-gray-500 transition-all duration-500 text-center lg:text-left ${
                   showCredits
                     ? 'opacity-100 translate-y-0 visible'
                     : 'opacity-0 -translate-y-2 invisible'
                 }`}
               >
                 <span className="inline-block mr-4">
-                  <span className="font-medium text-gray-700 dark:text-gray-300">Shahzada Shah</span>
-                  <span className="text-gray-400 dark:text-gray-500"> - Lead Senior Developer</span>
+                  <span className="font-medium text-gray-700">Shahzada Shah</span>
+                  <span className="text-gray-400"> - Lead Senior Developer</span>
                 </span>
                 <span className="inline-block">
-                  <span className="font-medium text-gray-700 dark:text-gray-300">Jimmy Carrera</span>
-                  <span className="text-gray-400 dark:text-gray-500"> - Lead Designer</span>
+                  <span className="font-medium text-gray-700">Jimmy Carrera</span>
+                  <span className="text-gray-400"> - Lead Designer</span>
                 </span>
               </div>
             </div>
@@ -178,7 +178,7 @@ const Footer = () => {
             {/* Scroll to Top Button */}
             <button
               onClick={scrollToTop}
-              className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-full hover:bg-gray-800 dark:hover:bg-gray-200 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 shadow-lg"
+              className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 shadow-lg"
               aria-label="Scroll to top"
             >
               <ArrowUp className="w-5 h-5" strokeWidth={2} />

@@ -9,7 +9,6 @@ import { SearchModal } from '../ui/SearchModal'
 import { CartPanel } from '../ui/CartPanel'
 import { WishlistPanel } from '../ui/WishlistPanel'
 import { MobileMenu } from '../ui/MobileMenu'
-import { ThemeToggle } from '../ui/ThemeToggle'
 import type { NavItem } from '../../types'
 
 /**
@@ -69,15 +68,15 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-40 transition-colors duration-200">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-[1400px] mx-auto px-8 py-6">
           <div className="flex items-center justify-between">
             <button
-              className="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+              className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
               onClick={openMobileMenu}
               aria-label="Open menu"
             >
-              <Menu className="w-6 h-6 text-gray-900 dark:text-gray-100" />
+              <Menu className="w-6 h-6" />
             </button>
 
             <nav className="hidden lg:flex items-center gap-12">
@@ -94,28 +93,26 @@ const Header = () => {
 
             <div className="absolute left-1/2 transform -translate-x-1/2">
               <Link to="/" className="block text-center group">
-                <h1 className="text-4xl font-serif tracking-wider text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors">
+                <h1 className="text-4xl font-serif tracking-wider text-gray-900 group-hover:text-gray-600 transition-colors">
                   FLOW
                 </h1>
-                <p className="text-xs tracking-widest text-gray-600 dark:text-gray-400 mt-1">STUDIO</p>
+                <p className="text-xs tracking-widest text-gray-600 mt-1">STUDIO</p>
               </Link>
             </div>
 
-            <nav className="flex items-center gap-4 lg:gap-6">
+            <nav className="flex items-center gap-6 lg:gap-8">
               <button
                 onClick={openSearch}
-                className="hidden sm:flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-colors tracking-wide group"
+                className="hidden sm:flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors tracking-wide group"
                 aria-label="Search"
               >
                 <Search className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span className="hidden lg:inline">SEARCH</span>
               </button>
 
-              <ThemeToggle />
-
               <Link
                 to="/account"
-                className="hidden sm:flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-colors tracking-wide group"
+                className="hidden sm:flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors tracking-wide group"
                 aria-label="Account"
               >
                 <User className="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -124,13 +121,13 @@ const Header = () => {
 
               <button
                 onClick={openWishlist}
-                className="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-colors tracking-wide group relative"
+                className="flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors tracking-wide group relative"
                 aria-label="Wishlist"
               >
                 <Heart className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span className="hidden lg:inline">WISHLIST</span>
                 {wishlist.size > 0 && (
-                  <span className="absolute -top-1 -right-1 lg:relative lg:top-0 lg:right-0 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs w-5 h-5 rounded-full flex items-center justify-center animate-scaleIn">
+                  <span className="absolute -top-1 -right-1 lg:relative lg:top-0 lg:right-0 bg-gray-900 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center animate-scaleIn">
                     {wishlist.size}
                   </span>
                 )}
@@ -138,13 +135,13 @@ const Header = () => {
 
               <button
                 onClick={openCart}
-                className="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-colors tracking-wide group relative"
+                className="flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors tracking-wide group relative"
                 aria-label="Shopping bag"
               >
                 <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span className="hidden lg:inline">BAG ({cartCount})</span>
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 lg:relative lg:top-0 lg:right-0 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs w-5 h-5 rounded-full flex items-center justify-center animate-scaleIn lg:hidden">
+                  <span className="absolute -top-1 -right-1 lg:relative lg:top-0 lg:right-0 bg-gray-900 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center animate-scaleIn lg:hidden">
                     {cartCount}
                   </span>
                 )}

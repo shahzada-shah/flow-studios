@@ -72,7 +72,7 @@ export const Auth = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center px-8 py-12 transition-colors duration-200">
+    <div className="min-h-screen bg-white flex items-center justify-center px-8 py-12">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="mb-8 text-center">
@@ -80,15 +80,15 @@ export const Auth = () => {
             to="/"
             className="inline-block group mb-8 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 rounded"
           >
-            <h1 className="text-4xl font-serif tracking-wider text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors duration-200">
+            <h1 className="text-4xl font-serif tracking-wider text-gray-900 group-hover:text-gray-600 transition-colors duration-200">
               FLOW
             </h1>
-            <p className="text-xs tracking-widest text-gray-600 dark:text-gray-400 mt-1">STUDIO</p>
+            <p className="text-xs tracking-widest text-gray-600 mt-1">STUDIO</p>
           </Link>
         </div>
 
         {/* Auth Card */}
-        <div className="border border-gray-200 dark:border-gray-800 p-8 hover:border-gray-300 dark:hover:border-gray-700 transition-colors duration-200">
+        <div className="border border-gray-200 p-8 hover:border-gray-300 transition-colors duration-200">
           <AuthTabs activeMode={mode} onModeChange={setMode} />
           <AuthForm mode={mode} onSubmit={handleSubmit} loading={loading} />
 
@@ -97,9 +97,9 @@ export const Auth = () => {
             <div className="mt-6 text-center">
               <button
                 className="
-                  text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline
+                  text-sm text-gray-600 hover:text-gray-900 underline
                   transition-colors duration-200
-                  focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:ring-offset-2
+                  focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2
                 "
               >
                 Forgot password?
@@ -109,12 +109,12 @@ export const Auth = () => {
         </div>
 
         {/* Continue Shopping Link */}
-        <div className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+        <div className="mt-8 text-center text-sm text-gray-600">
           <Link
             to="/"
             className="
-              hover:text-gray-900 dark:hover:text-gray-100 underline transition-colors duration-200
-              focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:ring-offset-2 rounded
+              hover:text-gray-900 underline transition-colors duration-200
+              focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 rounded
             "
           >
             Continue shopping

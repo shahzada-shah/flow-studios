@@ -43,7 +43,7 @@ export const Loader = ({ isLoading }: LoaderProps) => {
   return (
     <div
       className={`
-        fixed inset-0 z-50 bg-white dark:bg-gray-950
+        fixed inset-0 z-50 bg-white
         flex flex-col items-center justify-center
         transition-all duration-700 ease-in-out
         ${isExiting ? 'opacity-0 blur-xl' : 'opacity-100 blur-0'}
@@ -58,10 +58,10 @@ export const Loader = ({ isLoading }: LoaderProps) => {
       >
         {/* Logo */}
         <div className="animate-fadeIn">
-          <h1 className="text-6xl md:text-7xl font-serif tracking-wider text-gray-900 dark:text-gray-100 mb-2">
+          <h1 className="text-6xl md:text-7xl font-serif tracking-wider text-gray-900 mb-2">
             FLOW
           </h1>
-          <p className="text-xs tracking-widest text-gray-600 dark:text-gray-400 text-center">STUDIO</p>
+          <p className="text-xs tracking-widest text-gray-600 text-center">STUDIO</p>
         </div>
 
         {/* Loading Indicator */}
@@ -69,21 +69,21 @@ export const Loader = ({ isLoading }: LoaderProps) => {
           {/* Animated Dots */}
           <div className="flex gap-2">
             <div
-              className="w-2 h-2 bg-gray-900 dark:bg-gray-100 rounded-full animate-pulse"
+              className="w-2 h-2 bg-gray-900 rounded-full animate-pulse"
               style={{ animationDelay: '0ms' }}
             />
             <div
-              className="w-2 h-2 bg-gray-900 dark:bg-gray-100 rounded-full animate-pulse"
+              className="w-2 h-2 bg-gray-900 rounded-full animate-pulse"
               style={{ animationDelay: '150ms' }}
             />
             <div
-              className="w-2 h-2 bg-gray-900 dark:bg-gray-100 rounded-full animate-pulse"
+              className="w-2 h-2 bg-gray-900 rounded-full animate-pulse"
               style={{ animationDelay: '300ms' }}
             />
           </div>
 
           {/* Loading Text */}
-          <p className="text-sm tracking-wider text-gray-500 dark:text-gray-400 mt-6 animate-pulse">
+          <p className="text-sm tracking-wider text-gray-500 mt-6 animate-pulse">
             LOADING
           </p>
         </div>
