@@ -121,12 +121,12 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       </Link>
 
       <Link to={`/product/${product.slug}`}>
-        <div className="space-y-1">
+        <div className="space-y-2 pt-2">
           <h3 className="text-base font-normal text-gray-900 tracking-wide group-hover:text-gray-600 transition-colors duration-200">
             {product.name}
           </h3>
           <p className="text-sm text-gray-600">{product.color}</p>
-          <p className="text-base font-medium text-gray-900">${typeof product.price === 'number' ? product.price.toFixed(2) : product.price} USD</p>
+          <p className="text-base font-medium text-gray-900 mt-1">${typeof product.price === 'number' ? product.price.toFixed(2) : product.price} USD</p>
         </div>
       </Link>
     </div>

@@ -50,7 +50,6 @@ const socialLinks = [
 
 const Footer = () => {
   const [email, setEmail] = useState('')
-  const [isHovered, setIsHovered] = useState(false)
   const [showCredits, setShowCredits] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -89,9 +88,7 @@ const Footer = () => {
                 />
                 <button
                   type="submit"
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                  className="px-8 py-3 bg-gray-900 text-white text-sm font-medium tracking-wider hover:bg-gray-800 transition-all duration-300 transform hover:scale-105"
+                  className="px-8 py-3 bg-gray-900 text-white text-sm font-medium tracking-wider hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 active:scale-95"
                 >
                   SUBSCRIBE
                 </button>

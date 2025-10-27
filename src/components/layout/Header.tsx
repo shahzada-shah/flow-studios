@@ -93,10 +93,10 @@ const Header = () => {
 
             <div className="absolute left-1/2 transform -translate-x-1/2">
               <Link to="/" className="block text-center group">
-                <h1 className="text-4xl font-serif tracking-wider text-gray-900 group-hover:text-gray-600 transition-colors">
+                <h1 className="text-4xl font-serif tracking-wider text-gray-900 group-hover:text-gray-600 transition-colors duration-300">
                   FLOW
                 </h1>
-                <p className="text-xs tracking-widest text-gray-600 mt-1">STUDIO</p>
+                <p className="text-xs tracking-widest text-gray-600 mt-1 transition-colors duration-300 group-hover:text-gray-500">STUDIO</p>
               </Link>
             </div>
 
