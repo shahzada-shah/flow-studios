@@ -59,9 +59,9 @@ export const Loader = ({ isLoading }: LoaderProps) => {
         {/* Logo */}
         <div className="animate-fadeIn">
           <h1 className="text-6xl md:text-7xl font-serif tracking-wider text-gray-900 mb-2">
-            MOVE
+            FLOW
           </h1>
-          <p className="text-xs tracking-widest text-gray-600 text-center">EST.2025</p>
+          <p className="text-xs tracking-widest text-gray-600 text-center">STUDIO</p>
         </div>
 
         {/* Loading Indicator */}

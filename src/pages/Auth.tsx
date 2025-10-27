@@ -81,9 +81,9 @@ export const Auth = () => {
             className="inline-block group mb-8 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 rounded"
           >
             <h1 className="text-4xl font-serif tracking-wider text-gray-900 group-hover:text-gray-600 transition-colors duration-200">
-              MOVE
+              FLOW
             </h1>
-            <p className="text-xs tracking-widest text-gray-600 mt-1">EST.2025</p>
+            <p className="text-xs tracking-widest text-gray-600 mt-1">STUDIO</p>
           </Link>
         </div>
 

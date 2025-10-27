@@ -65,19 +65,19 @@ export const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
           <div className="flex flex-col justify-center px-12 py-16 bg-white">
             <div className="mb-12">
               <h2 className="text-4xl font-light tracking-[0.2em] text-gray-900 mb-2">
-                MOVE
+                FLOW
               </h2>
               <p className="text-sm tracking-[0.3em] text-gray-500 uppercase">
-                Active Living
+                Studio
               </p>
             </div>
 
             <h3 className="text-5xl font-light text-gray-900 mb-6 tracking-tight">
-              Discover More
+              Join Our Community
             </h3>
 
             <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-              Exclusive news and iconic products are waiting for you.
+              Get early access to new collections and mindful movement inspiration.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-6">

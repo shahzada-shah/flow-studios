@@ -36,13 +36,13 @@ const Hero = () => {
 
             <div className="relative z-10 animate-slideUp">
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif text-white mb-4 tracking-wide">
-                MOVE YOUR BODY
+                FLOW WITH INTENTION
               </h2>
               <p className="text-lg sm:text-xl text-white mb-8 font-light tracking-wide">
-                Sustainable activewear for every body
+                Mindful movement, beautiful design
               </p>
               <button className="bg-white text-gray-900 px-8 sm:px-12 py-3 sm:py-4 text-sm font-semibold tracking-widest hover:bg-gray-100 hover:shadow-lg hover:scale-105 transition-all active:scale-95">
-                FIND YOUR PERFECT FIT
+                DISCOVER THE COLLECTION
               </button>
             </div>
           </div>
