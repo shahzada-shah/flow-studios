@@ -2,14 +2,19 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { FilterPanel } from '../components/products/FilterPanel'
 import { ProductCard } from '../components/products/ProductCard'
+import { NewsletterModal } from '../components/ui/NewsletterModal'
 import { supabase } from '../lib/supabase'
 import type { Product, ProductFilters } from '../types/product'
+
+const NEWSLETTER_MODAL_KEY = 'newsletter_modal_shown'
+const MODAL_DELAY = 8000
 
 export const ProductCatalog = () => {
   const { category } = useParams<{ category: string }>()
   const [products, setProducts] = useState<Product[]>([])
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
   const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [isNewsletterOpen, setIsNewsletterOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [filters, setFilters] = useState<ProductFilters>({
     categories: category ? [category] : [],
@@ -29,6 +34,23 @@ export const ProductCatalog = () => {
   useEffect(() => {
     applyFilters()
   }, [products, filters])
+
+  useEffect(() => {
+    const hasSeenModal = localStorage.getItem(NEWSLETTER_MODAL_KEY)
+
+    if (!hasSeenModal) {
+      const timer = setTimeout(() => {
+        setIsNewsletterOpen(true)
+      }, MODAL_DELAY)
+
+      return () => clearTimeout(timer)
+    }
+  }, [])
+
+  const handleNewsletterClose = () => {
+    setIsNewsletterOpen(false)
+    localStorage.setItem(NEWSLETTER_MODAL_KEY, 'true')
+  }
 
   const fetchProducts = async () => {
     try {
@@ -116,6 +138,8 @@ export const ProductCatalog = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <NewsletterModal isOpen={isNewsletterOpen} onClose={handleNewsletterClose} />
+
       <FilterPanel
         isOpen={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
