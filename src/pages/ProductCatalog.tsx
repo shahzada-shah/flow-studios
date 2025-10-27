@@ -7,7 +7,7 @@ import { supabase } from '../lib/supabase'
 import type { Product, ProductFilters } from '../types/product'
 
 const NEWSLETTER_MODAL_KEY = 'newsletter_modal_shown'
-const MODAL_DELAY = 8000
+const MODAL_DELAY = 4000
 
 export const ProductCatalog = () => {
   const { category } = useParams<{ category: string }>()

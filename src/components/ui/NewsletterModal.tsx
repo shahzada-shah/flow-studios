@@ -37,13 +37,14 @@ export const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 overflow-y-auto">
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      <div className="relative w-full max-w-6xl bg-white shadow-2xl animate-fadeIn">
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="relative w-full max-w-6xl bg-white shadow-2xl animate-fadeIn">
         <button
           onClick={onClose}
           className="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all duration-200"
@@ -53,12 +54,12 @@ export const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
         </button>
 
         <div className="grid md:grid-cols-2 min-h-[600px]">
-          <div className="relative bg-gray-900 overflow-hidden">
-            <img
-              src="https://images.pexels.com/photos/1308484/pexels-photo-1308484.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="Newsletter"
-              className="w-full h-full object-cover opacity-90"
-            />
+          <div className="relative bg-gray-100 overflow-hidden flex items-center justify-center">
+            <div className="w-full h-full flex items-center justify-center p-12">
+              <svg className="w-32 h-32 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+              </svg>
+            </div>
           </div>
 
           <div className="flex flex-col justify-center px-12 py-16 bg-white">
@@ -116,6 +117,7 @@ export const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
               .
             </p>
           </div>
+        </div>
         </div>
       </div>
     </div>
