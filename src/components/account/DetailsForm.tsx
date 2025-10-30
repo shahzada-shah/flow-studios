@@ -73,6 +73,7 @@ export const DetailsForm = ({ onSave, initialData }: DetailsFormProps) => {
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
             placeholder="your.email@example.com"
+            autoComplete="off"
             className="
               w-full px-4 py-3 border border-gray-300
               focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900
@@ -95,6 +96,7 @@ export const DetailsForm = ({ onSave, initialData }: DetailsFormProps) => {
             value={formData.fullName}
             onChange={(e) => handleChange('fullName', e.target.value)}
             placeholder="John Doe"
+            autoComplete="off"
             className="
               w-full px-4 py-3 border border-gray-300
               focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900
@@ -117,6 +119,7 @@ export const DetailsForm = ({ onSave, initialData }: DetailsFormProps) => {
             value={formData.phone}
             onChange={(e) => handleChange('phone', e.target.value)}
             placeholder="+1 (555) 000-0000"
+            autoComplete="off"
             className="
               w-full px-4 py-3 border border-gray-300
               focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900

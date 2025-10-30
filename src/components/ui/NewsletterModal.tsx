@@ -88,6 +88,7 @@ export const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email*"
                   required
+                  autoComplete="off"
                   className="w-full px-6 py-4 border border-gray-300 focus:border-gray-900 focus:outline-none transition-colors duration-200 text-base"
                 />
               </div>

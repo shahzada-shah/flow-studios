@@ -109,6 +109,7 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                 ref={inputRef}
                 type="text"
                 placeholder="Search for products..."
+                autoComplete="off"
                 className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-200"
               />
             </div>

@@ -72,6 +72,7 @@ export const Checkout = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email address*"
                     className="w-full px-4 py-3 border border-gray-300 focus:border-gray-900 focus:outline-none text-sm"
+                    autoComplete="off"
                     required
                   />
                   <button
@@ -112,6 +113,7 @@ export const Checkout = () => {
                     onChange={(e) => setShippingInfo({ ...shippingInfo, fullName: e.target.value })}
                     placeholder="Full name*"
                     className="w-full px-4 py-3 border border-gray-300 focus:border-gray-900 focus:outline-none text-sm"
+                    autoComplete="off"
                     required
                   />
                   <input
@@ -120,6 +122,7 @@ export const Checkout = () => {
                     onChange={(e) => setShippingInfo({ ...shippingInfo, country: e.target.value })}
                     placeholder="Country*"
                     className="w-full px-4 py-3 border border-gray-300 focus:border-gray-900 focus:outline-none text-sm"
+                    autoComplete="off"
                     required
                   />
                   <div className="grid grid-cols-2 gap-4">
@@ -129,6 +132,7 @@ export const Checkout = () => {
                       onChange={(e) => setShippingInfo({ ...shippingInfo, city: e.target.value })}
                       placeholder="City*"
                       className="w-full px-4 py-3 border border-gray-300 focus:border-gray-900 focus:outline-none text-sm"
+                      autoComplete="off"
                       required
                     />
                     <input
@@ -137,6 +141,7 @@ export const Checkout = () => {
                       onChange={(e) => setShippingInfo({ ...shippingInfo, zipCode: e.target.value })}
                       placeholder="ZIP code*"
                       className="w-full px-4 py-3 border border-gray-300 focus:border-gray-900 focus:outline-none text-sm"
+                      autoComplete="off"
                       required
                     />
                   </div>
@@ -146,6 +151,7 @@ export const Checkout = () => {
                     onChange={(e) => setShippingInfo({ ...shippingInfo, streetAddress: e.target.value })}
                     placeholder="Street Address*"
                     className="w-full px-4 py-3 border border-gray-300 focus:border-gray-900 focus:outline-none text-sm"
+                    autoComplete="off"
                     required
                   />
                   <input
@@ -154,6 +160,7 @@ export const Checkout = () => {
                     onChange={(e) => setShippingInfo({ ...shippingInfo, apartment: e.target.value })}
                     placeholder="Apartment, suite, etc (optional)"
                     className="w-full px-4 py-3 border border-gray-300 focus:border-gray-900 focus:outline-none text-sm"
+                    autoComplete="off"
                   />
                   <input
                     type="tel"
@@ -161,6 +168,7 @@ export const Checkout = () => {
                     onChange={(e) => setShippingInfo({ ...shippingInfo, phone: e.target.value })}
                     placeholder="Phone number (in case of delivery questions)"
                     className="w-full px-4 py-3 border border-gray-300 focus:border-gray-900 focus:outline-none text-sm"
+                    autoComplete="off"
                   />
                   <button
                     type="submit"

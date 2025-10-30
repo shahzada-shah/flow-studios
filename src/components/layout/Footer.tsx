@@ -84,6 +84,7 @@ const Footer = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email Address"
                   className="flex-1 py-3 text-base text-gray-900 placeholder:text-gray-400 bg-transparent focus:outline-none"
+                  autoComplete="off"
                   required
                 />
                 <button

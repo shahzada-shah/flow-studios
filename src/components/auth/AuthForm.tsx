@@ -69,6 +69,7 @@ export const AuthForm = ({ mode, onSubmit, loading = false }: AuthFormProps) => 
           onChange={(e) => setEmail(e.target.value)}
           placeholder="your.email@example.com"
           required
+          autoComplete="off"
           className="
             w-full px-4 py-3 border border-gray-300
             focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900
@@ -93,6 +94,7 @@ export const AuthForm = ({ mode, onSubmit, loading = false }: AuthFormProps) => 
           placeholder="••••••••"
           required
           minLength={6}
+          autoComplete="new-password"
           className="
             w-full px-4 py-3 border border-gray-300
             focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900
@@ -118,6 +120,7 @@ export const AuthForm = ({ mode, onSubmit, loading = false }: AuthFormProps) => 
             placeholder="••••••••"
             required
             minLength={6}
+            autoComplete="new-password"
             className="
               w-full px-4 py-3 border border-gray-300
               focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900
