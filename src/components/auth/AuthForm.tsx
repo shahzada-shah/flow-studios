@@ -22,7 +22,9 @@
  * ```
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { passwordRequirements, isValidPassword } from '../../utils/validation'
+import { Check, X } from 'lucide-react'
 
 type AuthMode = 'signin' | 'signup'
 
@@ -42,9 +44,28 @@ export const AuthForm = ({ mode, onSubmit, loading = false }: AuthFormProps) => 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [showPasswordHints, setShowPasswordHints] = useState(false)
+  const [passwordsMatch, setPasswordsMatch] = useState(true)
+
+  useEffect(() => {
+    if (mode === 'signup' && confirmPassword) {
+      setPasswordsMatch(password === confirmPassword)
+    }
+  }, [password, confirmPassword, mode])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (mode === 'signup') {
+      if (!isValidPassword(password)) {
+        return
+      }
+      if (password !== confirmPassword) {
+        setPasswordsMatch(false)
+        return
+      }
+    }
+
     onSubmit({
       email,
       password,
@@ -91,9 +112,9 @@ export const AuthForm = ({ mode, onSubmit, loading = false }: AuthFormProps) => 
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onFocus={() => mode === 'signup' && setShowPasswordHints(true)}
           placeholder="••••••••"
           required
-          minLength={6}
           autoComplete="new-password"
           className="
             w-full px-4 py-3 border border-gray-300
@@ -101,6 +122,30 @@ export const AuthForm = ({ mode, onSubmit, loading = false }: AuthFormProps) => 
             text-sm transition-all duration-200
           "
         />
+
+        {/* Password Requirements - Show only in signup mode */}
+        {mode === 'signup' && showPasswordHints && password.length > 0 && (
+          <div className="mt-3 p-4 bg-gray-50 rounded-sm space-y-2 animate-slideDown">
+            <p className="text-xs font-medium text-gray-700 tracking-wide mb-2">PASSWORD REQUIREMENTS</p>
+            {passwordRequirements.map((req, index) => {
+              const isMet = req.test(password)
+              return (
+                <div key={index} className="flex items-center gap-2">
+                  {isMet ? (
+                    <Check className="w-4 h-4 text-green-600" strokeWidth={2.5} />
+                  ) : (
+                    <X className="w-4 h-4 text-gray-400" strokeWidth={2.5} />
+                  )}
+                  <span className={`text-xs ${
+                    isMet ? 'text-green-700 font-medium' : 'text-gray-600'
+                  }`}>
+                    {req.label}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        )}
       </div>
 
       {/* Confirm Password Field (Sign Up Only) */}
@@ -119,14 +164,23 @@ export const AuthForm = ({ mode, onSubmit, loading = false }: AuthFormProps) => 
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="••••••••"
             required
-            minLength={6}
             autoComplete="new-password"
-            className="
-              w-full px-4 py-3 border border-gray-300
-              focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900
-              text-sm transition-all duration-200
-            "
+            className={`
+              w-full px-4 py-3 border transition-all duration-200
+              focus:outline-none focus:ring-1
+              ${!passwordsMatch && confirmPassword
+                ? 'border-red-500 focus:border-red-600 focus:ring-red-600'
+                : 'border-gray-300 focus:border-gray-900 focus:ring-gray-900'
+              }
+              text-sm
+            `}
           />
+          {!passwordsMatch && confirmPassword && (
+            <p className="mt-2 text-xs text-red-600 flex items-center gap-1">
+              <X className="w-3 h-3" strokeWidth={2.5} />
+              Passwords do not match
+            </p>
+          )}
         </div>
       )}
 

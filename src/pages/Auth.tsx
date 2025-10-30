@@ -21,6 +21,7 @@ import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
 import { AuthTabs } from '../components/auth/AuthTabs'
 import { AuthForm } from '../components/auth/AuthForm'
+import { isValidPassword } from '../utils/validation'
 
 type AuthMode = 'signin' | 'signup'
 
@@ -42,6 +43,12 @@ export const Auth = () => {
 
     try {
       if (mode === 'signup') {
+        if (!isValidPassword(formData.password)) {
+          showToast('Password does not meet requirements', 'error')
+          setLoading(false)
+          return
+        }
+
         if (formData.password !== formData.confirmPassword) {
           showToast('Passwords do not match', 'error')
           setLoading(false)

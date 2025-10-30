@@ -9,12 +9,53 @@ export const isValidEmail = (email: string): boolean => {
 }
 
 /**
+ * Password validation requirements
+ */
+export interface PasswordRequirement {
+  label: string
+  test: (password: string) => boolean
+}
+
+export const passwordRequirements: PasswordRequirement[] = [
+  {
+    label: 'At least 8 characters',
+    test: (pwd) => pwd.length >= 8,
+  },
+  {
+    label: 'One uppercase letter',
+    test: (pwd) => /[A-Z]/.test(pwd),
+  },
+  {
+    label: 'One lowercase letter',
+    test: (pwd) => /[a-z]/.test(pwd),
+  },
+  {
+    label: 'One number',
+    test: (pwd) => /[0-9]/.test(pwd),
+  },
+  {
+    label: 'One special character',
+    test: (pwd) => /[!@#$%^&*(),.?":{}|<>]/.test(pwd),
+  },
+]
+
+/**
  * Validate password strength
  * @param password - Password to validate
- * @returns True if password meets requirements (min 8 chars)
+ * @returns True if password meets all requirements
  */
 export const isValidPassword = (password: string): boolean => {
-  return password.length >= 8
+  return passwordRequirements.every((req) => req.test(password))
+}
+
+/**
+ * Get password strength as percentage
+ * @param password - Password to check
+ * @returns Percentage of requirements met (0-100)
+ */
+export const getPasswordStrength = (password: string): number => {
+  const metRequirements = passwordRequirements.filter((req) => req.test(password)).length
+  return (metRequirements / passwordRequirements.length) * 100
 }
 
 /**
