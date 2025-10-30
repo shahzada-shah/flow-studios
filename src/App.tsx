@@ -36,7 +36,7 @@ function App() {
       <Loader isLoading={isLoading} />
       <BrowserRouter>
         <ScrollToTop />
-        <div className={`min-h-screen bg-white transition-all duration-500 ${isLoading ? 'blur-sm' : 'blur-0'}`}>
+        <div className={`min-h-screen bg-white transition-all duration-500 overflow-x-hidden w-full ${isLoading ? 'blur-sm' : 'blur-0'}`}>
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
