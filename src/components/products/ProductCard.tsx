@@ -1,3 +1,27 @@
+/**
+ * ProductCard Component
+ *
+ * Displays a product in a card format with image, details, and action buttons.
+ * Used in product grids on catalog and home pages.
+ *
+ * Features:
+ * - Product image with hover state
+ * - Quick add to cart with size selection
+ * - Wishlist toggle with heart icon
+ * - Product badges (new, bestseller, out of stock)
+ * - Responsive layout
+ * - Loading states for async actions
+ * - Toast notifications for user feedback
+ *
+ * User Interactions:
+ * - Click card to view product details
+ * - Click heart to add/remove from wishlist
+ * - Click shopping bag to add to cart (with size selector)
+ * - Hover to see enhanced visuals
+ *
+ * @component
+ */
+
 import { Heart, ImageIcon, ShoppingBag } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -7,7 +31,7 @@ import { useToast } from '../../context/ToastContext'
 import type { Product } from '../../types/product'
 
 interface ProductCardProps {
-  product: Product
+  product: Product // Product data from database
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {

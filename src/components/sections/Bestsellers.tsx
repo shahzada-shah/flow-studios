@@ -1,3 +1,28 @@
+/**
+ * Bestsellers Section Component
+ *
+ * Displays a curated selection of bestselling products on the home page.
+ * Fetches products marked as bestsellers from the database.
+ *
+ * Features:
+ * - Fetches up to 4 bestseller products from Supabase
+ * - Intersection Observer for scroll animations
+ * - Responsive grid layout (1-2-4 columns)
+ * - Loading states
+ * - Links to product detail pages
+ * - Placeholder images for products
+ *
+ * Data Source:
+ * - Queries products table where is_bestseller = true
+ * - Limited to 4 products
+ *
+ * Animation:
+ * - Fade-in effect when scrolled into view
+ * - Staggered animation for each product card
+ *
+ * @component
+ */
+
 import { ImageIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'

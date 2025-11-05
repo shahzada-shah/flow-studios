@@ -1,13 +1,38 @@
+/**
+ * FilterPanel Component
+ *
+ * Provides comprehensive product filtering functionality in a slide-out panel.
+ * Allows users to filter products by category, size, color, activity, and more.
+ *
+ * Features:
+ * - Multiple filter types (sort, category, size, color, activities, sustainability)
+ * - Collapsible filter sections
+ * - Active filter count badge
+ * - Clear all filters button
+ * - Persistent filter state
+ * - Mobile-friendly interface
+ *
+ * Filter Types:
+ * - sortBy: Single selection dropdown
+ * - categories: Multi-select checkboxes
+ * - sizes: Multi-select checkboxes
+ * - colors: Multi-select checkboxes
+ * - activities: Multi-select checkboxes
+ * - sustainable: Boolean toggle
+ *
+ * @component
+ */
+
 import { X, Plus, Minus } from 'lucide-react'
 import { useState } from 'react'
 import type { ProductFilters } from '../../types/product'
 
 interface FilterPanelProps {
-  isOpen: boolean
-  onClose: () => void
-  filters: ProductFilters
-  onFiltersChange: (filters: ProductFilters) => void
-  activeFilterCount: number
+  isOpen: boolean // Controls panel visibility
+  onClose: () => void // Callback to close panel
+  filters: ProductFilters // Current filter state
+  onFiltersChange: (filters: ProductFilters) => void // Callback when filters change
+  activeFilterCount: number // Number of active filters (for badge)
 }
 
 interface FilterSection {

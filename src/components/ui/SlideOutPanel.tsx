@@ -1,35 +1,55 @@
+/**
+ * SlideOutPanel Component
+ *
+ * A reusable slide-out panel component for cart, wishlist, filters, and other overlay content.
+ * Provides a consistent UX pattern for side panels throughout the application.
+ *
+ * Features:
+ * - Slides in from the right with smooth animations (400ms ease-in-out)
+ * - Semi-transparent backdrop with blur effect
+ * - Keyboard accessibility (ESC key to close)
+ * - Body scroll lock when panel is open
+ * - Click outside to close
+ * - Responsive width (full width on mobile, max-width on desktop)
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <SlideOutPanel
+ *   isOpen={isCartOpen}
+ *   onClose={() => setIsCartOpen(false)}
+ *   title="Shopping Cart"
+ * >
+ *   <div>Cart content here</div>
+ * </SlideOutPanel>
+ * ```
+ */
+
 import { useEffect } from 'react'
 import { X } from 'lucide-react'
 
 interface SlideOutPanelProps {
-  isOpen: boolean
-  onClose: () => void
-  title: string
-  children: React.ReactNode
+  isOpen: boolean // Controls panel visibility
+  onClose: () => void // Callback when panel should close
+  title: string // Panel header title
+  children: React.ReactNode // Panel content
 }
-
-/**
- * Reusable slide-out panel component for cart, wishlist, etc.
- * Slides in from the right with smooth, professional animations
- *
- * Features:
- * - Smooth ease-in-out transitions (400ms)
- * - Backdrop blur effect
- * - Keyboard accessibility (ESC to close)
- * - Body scroll lock when open
- */
 export const SlideOutPanel = ({ isOpen, onClose, title, children }: SlideOutPanelProps) => {
+  // Handle keyboard events and body scroll lock
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
 
     if (isOpen) {
+      // Add ESC key listener
       document.addEventListener('keydown', handleEscape)
+      // Prevent body scroll when panel is open
       document.body.style.overflow = 'hidden'
     }
 
     return () => {
+      // Cleanup on unmount or when panel closes
       document.removeEventListener('keydown', handleEscape)
       document.body.style.overflow = 'unset'
     }

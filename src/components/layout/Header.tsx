@@ -1,3 +1,42 @@
+/**
+ * Header Component
+ *
+ * Main navigation header for the application.
+ * Provides access to all major features and pages.
+ *
+ * Structure:
+ * - Logo (left)
+ * - Navigation menu (center) - desktop only
+ * - Action icons (right): search, wishlist, cart, account
+ * - Mobile menu button (hamburger) - mobile only
+ *
+ * Features:
+ * - Responsive design (desktop/mobile layouts)
+ * - Dropdown menus on desktop
+ * - Slide-out mobile menu
+ * - Search modal
+ * - Cart panel
+ * - Wishlist panel
+ * - Badge counts for cart and wishlist
+ * - Hover states and smooth transitions
+ *
+ * Desktop Navigation:
+ * - NEW: New arrivals and bestsellers
+ * - LEGGINGS: All leggings styles
+ * - TOPS: All top styles
+ * - SPORTS BRAS: All sports bra styles
+ * - ACCESSORIES: All accessories
+ * - SALE: Discounted items
+ *
+ * User Actions:
+ * - Search: Opens search modal
+ * - Heart: Opens wishlist panel
+ * - Bag: Opens cart panel
+ * - User: Goes to account/auth page
+ *
+ * @component
+ */
+
 import { Search, User, Heart, ShoppingBag, Menu } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -10,11 +49,6 @@ import { CartPanel } from '../ui/CartPanel'
 import { WishlistPanel } from '../ui/WishlistPanel'
 import { MobileMenu } from '../ui/MobileMenu'
 import type { NavItem } from '../../types'
-
-/**
- * Main header component with navigation, search, and user actions
- * Features responsive design with mobile menu and interactive elements
- */
 const Header = () => {
   const [isSearchOpen, , openSearch, closeSearch] = useToggle(false)
   const [isCartOpen, , openCart, closeCart] = useToggle(false)
