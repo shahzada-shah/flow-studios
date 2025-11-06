@@ -64,8 +64,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    console.log('🎨 Flow Studios App initialized successfully!')
     const timer = setTimeout(() => {
       setIsLoading(false)
+      console.log('✅ App loaded and ready')
     }, 1500)
 
     return () => clearTimeout(timer)
