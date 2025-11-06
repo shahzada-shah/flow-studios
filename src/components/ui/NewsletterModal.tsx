@@ -1,5 +1,5 @@
 import { X } from 'lucide-react'
-import { useState, FormEvent } from 'react'
+import { useState, FormEvent, useEffect } from 'react'
 import { useToast } from '../../context/ToastContext'
 
 interface NewsletterModalProps {
@@ -11,6 +11,16 @@ export const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { showToast } = useToast()
+
+  // Lock body scroll when modal is open to avoid dual scrollbars
+  useEffect(() => {
+    if (!isOpen) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previousOverflow || 'unset'
+    }
+  }, [isOpen])
 
   if (!isOpen) return null
 

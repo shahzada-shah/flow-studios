@@ -23,7 +23,7 @@
  */
 
 import { Heart, ImageIcon, ShoppingBag } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useWishlist } from '../../context/WishlistContext'
 import { useCart } from '../../context/CartContext'
@@ -42,6 +42,19 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || 'M')
   const [showSizeSelector, setShowSizeSelector] = useState(false)
   const [isAdding, setIsAdding] = useState(false)
+
+  // Build candidate image sources: Only load if image_url is set
+  const imageCandidates = useMemo(() => {
+    if (!product.image_url) return [] // No image_url = show placeholder
+    return [
+      product.image_url,
+      `/images/products/thumbs/${product.slug}-1.jpg`,
+    ].filter(Boolean)
+  }, [product.image_url, product.slug])
+
+  const [imgIndex, setImgIndex] = useState(0)
+  const [imgLoaded, setImgLoaded] = useState(false)
+  const imgSrc = imageCandidates[imgIndex]
 
   const handleAddToCart = async () => {
     setIsAdding(true)
@@ -66,6 +79,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     <div className="group relative">
       <Link to={`/product/${product.slug}`}>
         <div className="relative aspect-[3/4] bg-gray-200 overflow-hidden rounded-sm mb-4">
+        {!imgLoaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100 group-hover:bg-gray-150 transition-colors duration-200">
           <div className="flex flex-col items-center gap-3 text-gray-400 group-hover:text-gray-500 transition-colors duration-200">
             <div className="border-4 border-dashed border-gray-400 rounded-lg p-6 group-hover:border-gray-500 transition-colors duration-200">
@@ -77,6 +91,17 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             </div>
           </div>
         </div>
+        )}
+
+        {imgSrc && (
+          <img
+            src={imgSrc}
+            alt={product.name}
+            className="absolute inset-0 w-full h-full object-cover"
+            onLoad={() => setImgLoaded(true)}
+            onError={() => setImgIndex((i) => (i + 1 < imageCandidates.length ? i + 1 : i))}
+          />
+        )}
 
         <button
           onClick={handleWishlistToggle}

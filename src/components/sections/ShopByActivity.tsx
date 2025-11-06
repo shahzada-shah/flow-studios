@@ -11,20 +11,20 @@ interface ActivityCategory {
 const categories: ActivityCategory[] = [
   {
     id: 1,
-    title: 'YOGA ESSENTIALS',
-    image: '',
-    href: '#yoga',
+    title: 'REFORMER ESSENTIALS',
+    image: '/images/hero/hero-left.png',
+    href: '#reformer',
   },
   {
     id: 2,
     title: 'PILATES PERFORMANCE',
-    image: '',
+    image: '/images/hero/hero-main.png',
     href: '#pilates',
   },
   {
     id: 3,
-    title: 'STREETSTYLE',
-    image: '',
+    title: 'STUDIO STREETSTYLE',
+    image: '/images/hero/hero-right.png',
     href: '#streetstyle',
   },
 ]
@@ -76,6 +76,11 @@ export const ShopByActivity = () => {
               transitionDelay: `${index * 0.15}s`,
             }}
           >
+            {/* Image */}
+            {category.image ? (
+              <img src={category.image} alt={category.title} className="absolute inset-0 w-full h-full object-cover" />
+            ) : null}
+
             <div className="absolute inset-0 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
               <div className="flex flex-col items-center gap-4 text-gray-400">
                 <div className="border-4 border-dashed border-gray-400 rounded-lg p-8">

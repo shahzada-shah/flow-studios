@@ -4,8 +4,8 @@ import { Heart, ImageIcon, ChevronRight, Package, ChevronDown } from 'lucide-rea
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useToast } from '../context/ToastContext'
-import { supabase } from '../lib/supabase'
 import type { Product } from '../types/product'
+import { PRODUCTS } from '../data/products'
 
 export const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -25,32 +25,15 @@ export const ProductDetail = () => {
   const { showToast } = useToast()
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      if (!slug) return
-
-      try {
-        const { data, error } = await supabase
-          .from('products')
-          .select('*')
-          .eq('slug', slug)
-          .maybeSingle()
-
-        if (error) throw error
-        if (data) {
-          setProduct(data)
-          setSelectedSize(data.sizes[0] || '')
-        } else {
-          setNotFound(true)
-        }
-      } catch (error) {
-        console.error('Error fetching product:', error)
-        setNotFound(true)
-      } finally {
-        setLoading(false)
-      }
+    if (!slug) return
+    const item = PRODUCTS.find((p) => p.slug === slug)
+    if (item) {
+      setProduct(item)
+      setSelectedSize(item.sizes[0] || '')
+    } else {
+      setNotFound(true)
     }
-
-    fetchProduct()
+    setLoading(false)
   }, [slug])
 
   if (loading) {
@@ -121,7 +104,12 @@ export const ProductDetail = () => {
     }))
   }
 
-  const images = [product.image_url, product.image_url]
+  // Use product images only if image_url is set; otherwise show placeholder
+  const images = product.image_url ? [
+    product.image_url,
+    `/images/products/thumbs/${product.slug}-1.jpg`,
+    `/images/products/thumbs/${product.slug}-2.jpg`,
+  ] : []
 
   return (
     <div className="min-h-screen bg-white">
@@ -141,37 +129,68 @@ export const ProductDetail = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="space-y-4">
             <div className="aspect-[3/4] bg-gray-100 rounded-sm overflow-hidden">
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="flex flex-col items-center gap-3 text-gray-400">
-                  <div className="border-4 border-dashed border-gray-400 rounded-lg p-12">
-                    <ImageIcon className="w-20 h-20" strokeWidth={1.5} />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-base font-medium tracking-wider">PRODUCT IMAGE</p>
-                    <p className="text-sm tracking-wide mt-1">600 × 800</p>
+              {images.length > 0 ? (
+                <img
+                  src={images[selectedImage]}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // fallback to placeholder icon if the image path is missing
+                    const parent = (e.currentTarget.parentElement as HTMLElement)
+                    e.currentTarget.style.display = 'none'
+                    if (parent) {
+                      parent.innerHTML = `
+                        <div class='w-full h-full flex items-center justify-center'>
+                          <div class='flex flex-col items-center gap-3 text-gray-400'>
+                            <div class='border-4 border-dashed border-gray-400 rounded-lg p-12'>
+                              <svg class='w-20 h-20' viewBox='0 0 24 24' fill='none' stroke='currentColor'><rect x='3' y='3' width='18' height='18' rx='2' ry='2'></rect><circle cx='8.5' cy='8.5' r='1.5'></circle><path d='M21 15l-5-5L5 21'></path></svg>
+                            </div>
+                            <div class='text-center'>
+                              <p class='text-base font-medium tracking-wider'>PRODUCT IMAGE</p>
+                              <p class='text-sm tracking-wide mt-1'>600 × 800</p>
+                            </div>
+                          </div>
+                        </div>`
+                    }
+                  }}
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="flex flex-col items-center gap-3 text-gray-400">
+                    <div className="border-4 border-dashed border-gray-400 rounded-lg p-12">
+                      <ImageIcon className="w-20 h-20" strokeWidth={1.5} />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-base font-medium tracking-wider">PRODUCT IMAGE</p>
+                      <p className="text-sm tracking-wide mt-1">600 × 800</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              {images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={`aspect-[3/4] bg-gray-100 rounded-sm overflow-hidden transition-all duration-200 ${
-                    selectedImage === index ? 'ring-2 ring-gray-900' : 'opacity-60 hover:opacity-100'
-                  }`}
-                >
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="flex flex-col items-center gap-2 text-gray-400">
-                      <div className="border-2 border-dashed border-gray-400 rounded-lg p-4">
-                        <ImageIcon className="w-8 h-8" strokeWidth={1.5} />
-                      </div>
-                    </div>
-                  </div>
-                </button>
-              ))}
+              {images.slice(1).map((src, idx) => {
+                const index = idx + 1
+                return (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImage(index)}
+                    className={`aspect-[3/4] bg-gray-100 rounded-sm overflow-hidden transition-all duration-200 ${
+                      selectedImage === index ? 'ring-2 ring-gray-900' : 'opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <img
+                      src={src}
+                      alt={`${product.name} thumbnail ${index}`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  </button>
+                )
+              })}
             </div>
           </div>
 

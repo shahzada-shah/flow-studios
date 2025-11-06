@@ -26,8 +26,8 @@
 import { ImageIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { supabase } from '../../lib/supabase'
 import type { Product } from '../../types/product'
+import { PRODUCTS } from '../../data/products'
 
 export const Bestsellers = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -36,24 +36,9 @@ export const Bestsellers = () => {
   const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    const fetchBestsellers = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('products')
-          .select('*')
-          .eq('is_bestseller', true)
-          .limit(4)
-
-        if (error) throw error
-        setProducts(data || [])
-      } catch (error) {
-        console.error('Error fetching bestsellers:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchBestsellers()
+    const data = PRODUCTS.filter((p) => p.is_bestseller).slice(0, 4)
+    setProducts(data)
+    setLoading(false)
   }, [])
 
   useEffect(() => {

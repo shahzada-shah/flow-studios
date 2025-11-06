@@ -38,8 +38,9 @@ export const useClickOutside = (
     }
 
     // Listen for both mouse and touch events
+    // Use passive: true for touchstart to allow scrolling without blocking
     document.addEventListener('mousedown', listener)
-    document.addEventListener('touchstart', listener)
+    document.addEventListener('touchstart', listener, { passive: true })
 
     // Cleanup event listeners on unmount
     return () => {

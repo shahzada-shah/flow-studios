@@ -1,4 +1,3 @@
-import { ImageIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 export const BrandBanner = () => {
@@ -60,25 +59,13 @@ export const BrandBanner = () => {
             </div>
           </div>
 
-          {/* Image Placeholder - Right Side */}
+          {/* Right Image */}
           <div
             className={`relative bg-gray-200 transition-all duration-1000 delay-300 ${
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
             }`}
           >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="flex flex-col items-center gap-4 text-gray-400">
-                <div className="border-4 border-dashed border-gray-400 rounded-lg p-10">
-                  <ImageIcon className="w-20 h-20" strokeWidth={1.5} />
-                </div>
-                <div className="text-center">
-                  <p className="text-lg font-medium tracking-wider">BANNER IMAGE</p>
-                  <p className="text-sm tracking-wide mt-1">1200 × 800</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Decorative overlay for depth */}
+            <img src="/images/products/featured/mockup_feature_01.png" alt="Flow Studios banner" className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-gray-300/20" />
           </div>
         </div>
