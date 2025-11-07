@@ -25,7 +25,7 @@
  * ```
  */
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 
 interface SlideOutPanelProps {
@@ -35,6 +35,8 @@ interface SlideOutPanelProps {
   children: React.ReactNode // Panel content
 }
 export const SlideOutPanel = ({ isOpen, onClose, title, children }: SlideOutPanelProps) => {
+  const [scrollPosition, setScrollPosition] = useState(0)
+
   // Handle keyboard events and body scroll lock
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -42,6 +44,9 @@ export const SlideOutPanel = ({ isOpen, onClose, title, children }: SlideOutPane
     }
 
     if (isOpen) {
+      // Capture scroll position when opening
+      setScrollPosition(window.scrollY)
+      
       // Add ESC key listener
       document.addEventListener('keydown', handleEscape)
       // Prevent body scroll when panel is open
@@ -59,17 +64,20 @@ export const SlideOutPanel = ({ isOpen, onClose, title, children }: SlideOutPane
     <>
       {/* Backdrop with smooth fade */}
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-all duration-400 ease-in-out ${
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-all duration-500 ease-out ${
           isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
       />
 
-      {/* Slide-out panel with smooth translation */}
+      {/* Slide-out panel with smooth translation - positioned relative to scroll */}
       <div
-        className={`fixed right-0 top-0 h-screen w-full max-w-md bg-white shadow-2xl z-50 transform transition-all duration-400 ease-in-out ${
+        className={`fixed right-0 h-screen w-full max-w-md bg-white shadow-2xl z-50 transform transition-all duration-500 ease-out ${
           isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
         }`}
+        style={{
+          top: `${scrollPosition}px`,
+        }}
       >
         <div className="flex flex-col h-full max-h-screen">
           {/* Header */}
@@ -85,7 +93,7 @@ export const SlideOutPanel = ({ isOpen, onClose, title, children }: SlideOutPane
           </div>
 
           {/* Content with stagger animation */}
-          <div className={`flex-1 overflow-hidden min-h-0 transition-all duration-300 delay-100 ${
+          <div className={`flex-1 overflow-hidden min-h-0 transition-all duration-500 delay-100 ease-out ${
             isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}>
             {children}
