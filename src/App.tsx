@@ -37,6 +37,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import { Loader } from './components/ui/Loader'
+import { useImagePreloader } from './hooks/useImagePreloader'
 import { Home } from './pages/Home'
 import { ProductCatalog } from './pages/ProductCatalog'
 import { ProductDetail } from './pages/ProductDetail'
@@ -60,39 +61,63 @@ function ScrollToTop() {
   return null
 }
 
-function App() {
+/**
+ * AppContent Component
+ *
+ * Main app content that tracks image loading and controls the loader.
+ * Separated to use hooks that require Router context.
+ */
+function AppContent() {
   const [isLoading, setIsLoading] = useState(true)
+  const [minLoadTimePassed, setMinLoadTimePassed] = useState(false)
+  const imagesLoaded = useImagePreloader()
+
+  // Ensure minimum load time of 800ms for smooth experience
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMinLoadTimePassed(true)
+    }, 800)
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Hide loader when both conditions are met
+  useEffect(() => {
+    if (imagesLoaded && minLoadTimePassed) {
+      setIsLoading(false)
+      console.log('✅ All images loaded and ready')
+    }
+  }, [imagesLoaded, minLoadTimePassed])
 
   useEffect(() => {
     console.log('🎨 Flow Studios App initialized successfully!')
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-      console.log('✅ App loaded and ready')
-    }, 1500)
-
-    return () => clearTimeout(timer)
   }, [])
 
   return (
     <>
       <Loader isLoading={isLoading} />
-      <BrowserRouter basename="/flow-studios">
-        <ScrollToTop />
-        <div className={`min-h-screen bg-white transition-all duration-500 w-full ${isLoading ? 'blur-sm' : 'blur-0'}`}>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/shop/:category" element={<ProductCatalog />} />
-            <Route path="/shop" element={<ProductCatalog />} />
-            <Route path="/product/:slug" element={<ProductDetail />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/auth" element={<Auth />} />
-          </Routes>
-          <Footer />
-        </div>
-      </BrowserRouter>
+      <ScrollToTop />
+      <div className={`min-h-screen bg-white transition-all duration-500 w-full ${isLoading ? 'blur-sm' : 'blur-0'}`}>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop/:category" element={<ProductCatalog />} />
+          <Route path="/shop" element={<ProductCatalog />} />
+          <Route path="/product/:slug" element={<ProductDetail />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/auth" element={<Auth />} />
+        </Routes>
+        <Footer />
+      </div>
     </>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter basename="/flow-studios">
+      <AppContent />
+    </BrowserRouter>
   )
 }
 
