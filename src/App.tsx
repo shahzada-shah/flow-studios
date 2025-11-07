@@ -76,7 +76,7 @@ function App() {
   return (
     <>
       <Loader isLoading={isLoading} />
-      <BrowserRouter>
+      <BrowserRouter basename="/flow-studios">
         <ScrollToTop />
         <div className={`min-h-screen bg-white transition-all duration-500 w-full ${isLoading ? 'blur-sm' : 'blur-0'}`}>
           <Header />
