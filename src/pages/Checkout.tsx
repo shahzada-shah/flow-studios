@@ -39,7 +39,7 @@ export const Checkout = () => {
 
   return (
     <div className="bg-gray-50">
-      <div className="max-w-[1400px] mx-auto px-8 py-8 pb-16">
+      <div className="max-w-[1400px] mx-auto px-8 py-8">
         <div className="mb-8">
           <div className="text-sm tracking-wide text-gray-600">
             <Link to="/" className="hover:text-gray-900 transition-colors">BAG</Link>
