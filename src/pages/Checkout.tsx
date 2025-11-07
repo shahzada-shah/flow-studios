@@ -287,9 +287,17 @@ export const Checkout = () => {
                 {cartItems.map((item) => (
                   <div key={`${item.product.id}-${item.size}`} className="flex gap-4">
                     <div className="w-24 h-32 bg-gray-100 flex-shrink-0 rounded-sm overflow-hidden">
-                      <div className="w-full h-full flex items-center justify-center">
-                        <ImageIcon className="w-8 h-8 text-gray-400" strokeWidth={1.5} />
-                      </div>
+                      {item.product.image_url ? (
+                        <img
+                          src={item.product.image_url}
+                          alt={item.product.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <ImageIcon className="w-8 h-8 text-gray-400" strokeWidth={1.5} />
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1 flex justify-between">
                       <div className="space-y-1">

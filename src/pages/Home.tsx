@@ -15,7 +15,16 @@ export const Home = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsNewsletterOpen(true)
+      // Smooth scroll to top before opening modal
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+      
+      // Open modal after scroll animation completes
+      setTimeout(() => {
+        setIsNewsletterOpen(true)
+      }, 800) // Wait for smooth scroll to complete
     }, MODAL_DELAY)
 
     return () => clearTimeout(timer)
