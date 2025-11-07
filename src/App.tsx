@@ -32,7 +32,7 @@
  * - ToastProvider: Notifications
  */
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
@@ -51,12 +51,13 @@ import { Auth } from './pages/Auth'
  * Utility component that scrolls to top on route changes.
  * Provides smooth user experience when navigating between pages.
  */
-function ScrollToTop() {
+function ScrollToTop({ onRouteChange }: { onRouteChange: () => void }) {
   const { pathname } = useLocation()
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [pathname])
+    onRouteChange()
+  }, [pathname, onRouteChange])
 
   return null
 }
@@ -70,9 +71,24 @@ function ScrollToTop() {
 function AppContent() {
   const [isLoading, setIsLoading] = useState(true)
   const [minLoadTimePassed, setMinLoadTimePassed] = useState(false)
-  const imagesLoaded = useImagePreloader()
+  const [routeChangeCounter, setRouteChangeCounter] = useState(0)
+  const imagesLoaded = useImagePreloader(routeChangeCounter)
 
-  // Ensure minimum load time of 800ms for smooth experience
+  // Handle route changes - reset loader and timers
+  const handleRouteChange = useCallback(() => {
+    setIsLoading(true)
+    setMinLoadTimePassed(false)
+    setRouteChangeCounter(prev => prev + 1)
+    
+    // Reset minimum load time for new page
+    const timer = setTimeout(() => {
+      setMinLoadTimePassed(true)
+    }, 500) // Shorter delay for subsequent page loads
+    
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Initial load - ensure minimum load time of 800ms for smooth experience
   useEffect(() => {
     const timer = setTimeout(() => {
       setMinLoadTimePassed(true)
@@ -95,7 +111,7 @@ function AppContent() {
   return (
     <>
       <Loader isLoading={isLoading} />
-      <ScrollToTop />
+      <ScrollToTop onRouteChange={handleRouteChange} />
       <div className={`min-h-screen bg-white transition-all duration-500 w-full ${isLoading ? 'blur-sm' : 'blur-0'}`}>
         <Header />
         <Routes>
