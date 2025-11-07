@@ -91,8 +91,8 @@ export const Account = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-[1400px] mx-auto px-8 py-8">
+    <div className="bg-white">
+      <div className="max-w-[1400px] mx-auto px-8 py-8 pb-16">
         {/* Breadcrumb Navigation */}
         <nav className="mb-8" aria-label="Breadcrumb">
           <div className="text-sm tracking-wide text-gray-600">
