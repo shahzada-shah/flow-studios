@@ -3,13 +3,9 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { FilterPanel } from '../components/products/FilterPanel'
 import { ProductCard } from '../components/products/ProductCard'
 import { QuickBuyModal } from '../components/products/QuickBuyModal'
-import { NewsletterModal } from '../components/ui/NewsletterModal'
 import { useToast } from '../context/ToastContext'
 import type { Product, ProductFilters } from '../types/product'
 import { PRODUCTS } from '../data/products'
-
-const NEWSLETTER_MODAL_KEY = 'newsletter_modal_shown'
-const MODAL_DELAY = 4000
 
 export const ProductCatalog = () => {
   const { category } = useParams<{ category: string }>()
@@ -20,7 +16,6 @@ export const ProductCatalog = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [isNewsletterOpen, setIsNewsletterOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [filters, setFilters] = useState<ProductFilters>({
     categories: category ? [category] : [],
@@ -42,23 +37,6 @@ export const ProductCatalog = () => {
   useEffect(() => {
     applyFilters()
   }, [products, filters])
-
-  useEffect(() => {
-    const hasSeenModal = localStorage.getItem(NEWSLETTER_MODAL_KEY)
-
-    if (!hasSeenModal) {
-      const timer = setTimeout(() => {
-        setIsNewsletterOpen(true)
-      }, MODAL_DELAY)
-
-      return () => clearTimeout(timer)
-    }
-  }, [])
-
-  const handleNewsletterClose = () => {
-    setIsNewsletterOpen(false)
-    localStorage.setItem(NEWSLETTER_MODAL_KEY, 'true')
-  }
 
   const handleQuickBuy = (product: Product) => {
     setQuickBuyProduct(product)
@@ -165,7 +143,6 @@ export const ProductCatalog = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <NewsletterModal isOpen={isNewsletterOpen} onClose={handleNewsletterClose} />
       <QuickBuyModal
         isOpen={isQuickBuyOpen}
         product={quickBuyProduct}
