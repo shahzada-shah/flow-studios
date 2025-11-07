@@ -6,7 +6,6 @@
  *
  * Features:
  * - Product image with hover state
- * - Quick add to cart with size selection
  * - Wishlist toggle with heart icon
  * - Product badges (new, bestseller, out of stock)
  * - Responsive layout
@@ -22,26 +21,22 @@
  * @component
  */
 
-import { Heart, ImageIcon, ShoppingBag } from 'lucide-react'
+import { Heart, ImageIcon } from 'lucide-react'
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useWishlist } from '../../context/WishlistContext'
-import { useCart } from '../../context/CartContext'
 import { useToast } from '../../context/ToastContext'
 import type { Product } from '../../types/product'
 
 interface ProductCardProps {
   product: Product // Product data from database
+  onQuickBuy?: (product: Product) => void
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({ product, onQuickBuy }: ProductCardProps) => {
   const { isInWishlist, toggleWishlist } = useWishlist()
-  const { addToCart } = useCart()
   const { showToast } = useToast()
   const inWishlist = isInWishlist(product.id)
-  const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || 'M')
-  const [showSizeSelector, setShowSizeSelector] = useState(false)
-  const [isAdding, setIsAdding] = useState(false)
 
   // Build candidate image sources: Only load if image_url is set
   const imageCandidates = useMemo(() => {
@@ -55,13 +50,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const [imgIndex, setImgIndex] = useState(0)
   const [imgLoaded, setImgLoaded] = useState(false)
   const imgSrc = imageCandidates[imgIndex]
-
-  const handleAddToCart = async () => {
-    setIsAdding(true)
-    await addToCart(product, selectedSize)
-    showToast(`Added ${product.name} to bag`, 'success')
-    setTimeout(() => setIsAdding(false), 1000)
-  }
 
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -124,48 +112,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           </div>
         )}
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          {showSizeSelector ? (
-            <div className="space-y-2 animate-fadeIn">
-              <div className="flex gap-2 justify-center mb-2">
-                {product.sizes.map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className={`w-10 h-10 flex items-center justify-center text-xs font-medium transition-all duration-200 ${
-                      selectedSize === size
-                        ? 'bg-gray-900 text-white'
-                        : 'bg-white text-gray-900 hover:bg-gray-100'
-                    }`}
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-              <button
-                onClick={handleAddToCart}
-                disabled={isAdding}
-                className="w-full bg-gray-900 text-white py-3 text-xs font-medium tracking-wider hover:bg-gray-800 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
-              >
-                {isAdding ? (
-                  'ADDED!'
-                ) : (
-                  <>
-                    <ShoppingBag className="w-4 h-4" />
-                    ADD TO BAG
-                  </>
-                )}
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => setShowSizeSelector(true)}
-              className="w-full bg-white text-gray-900 py-3 text-xs font-medium tracking-wider hover:bg-gray-100 transition-all duration-200"
-            >
-              SELECT SIZE
-            </button>
-          )}
-        </div>
       </div>
       </Link>
 
@@ -178,6 +124,19 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <p className="text-base font-medium text-gray-900 mt-1">${typeof product.price === 'number' ? product.price.toFixed(2) : product.price} USD</p>
         </div>
       </Link>
+
+      {onQuickBuy && (
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation()
+            onQuickBuy(product)
+          }}
+          className="mt-4 w-full border border-gray-900 text-gray-900 py-3 text-xs font-medium tracking-[0.35em] uppercase hover:bg-gray-900 hover:text-white transition-all duration-200"
+        >
+          Quick Buy
+        </button>
+      )}
     </div>
   )
 }

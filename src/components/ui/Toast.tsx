@@ -1,7 +1,7 @@
-import { X, Check, Heart } from 'lucide-react'
+import { X, Check, Heart, AlertCircle } from 'lucide-react'
 import { useEffect } from 'react'
 
-export type ToastType = 'success' | 'wishlist'
+export type ToastType = 'success' | 'wishlist' | 'error'
 
 interface ToastProps {
   id: string
@@ -31,6 +31,11 @@ export const Toast = ({ id, message, type, onClose }: ToastProps) => {
           {type === 'wishlist' && (
             <div className="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center">
               <Heart className="w-5 h-5 text-white fill-white" strokeWidth={2} />
+            </div>
+          )}
+          {type === 'error' && (
+            <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
+              <AlertCircle className="w-5 h-5 text-white" strokeWidth={2} />
             </div>
           )}
         </div>

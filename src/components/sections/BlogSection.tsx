@@ -1,4 +1,4 @@
-import { ImageIcon, Clock } from 'lucide-react'
+import { Clock } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 interface BlogPost {
@@ -7,6 +7,7 @@ interface BlogPost {
   title: string
   description: string
   readTime: string
+  image: string
 }
 
 const blogPosts: BlogPost[] = [
@@ -17,6 +18,7 @@ const blogPosts: BlogPost[] = [
     description:
       'Discover how embracing movement can boost self-love and body confidence every day.',
     readTime: '5 mins',
+    image: '/images/blog/blog_left_01.png',
   },
   {
     id: 2,
@@ -25,6 +27,7 @@ const blogPosts: BlogPost[] = [
     description:
       'Unlock the benefits of mindful breathing to reduce stress and improve focus.',
     readTime: '10 min',
+    image: '/images/blog/blog_center_01.png',
   },
   {
     id: 3,
@@ -33,6 +36,7 @@ const blogPosts: BlogPost[] = [
     description:
       'Discover how intentional movement can bring harmony to your mind and body.',
     readTime: '5 mins',
+    image: '/images/blog/blog_right_01.png',
   },
 ]
 
@@ -91,21 +95,13 @@ export const BlogSection = () => {
               transitionDelay: `${index * 0.15}s`,
             }}
           >
-            {/* Image Placeholder */}
-            <div className="relative aspect-[4/5] bg-gray-200 mb-6 overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center group-hover:scale-105 transition-transform duration-700 ease-out">
-                <div className="flex flex-col items-center gap-3 text-gray-400">
-                  <div className="border-2 border-dashed border-gray-400 rounded-lg p-8">
-                    <ImageIcon className="w-16 h-16" strokeWidth={1.5} />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-sm font-medium tracking-wider">
-                      BLOG IMAGE
-                    </p>
-                    <p className="text-xs tracking-wide mt-1">800 × 1000</p>
-                  </div>
-                </div>
-              </div>
+            {/* Blog Image */}
+            <div className="relative aspect-[4/5] bg-gray-200 mb-6 overflow-hidden rounded-sm">
+              <img 
+                src={post.image} 
+                alt={post.title}
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
               {/* Overlay on hover */}
               <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>

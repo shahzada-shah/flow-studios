@@ -39,14 +39,14 @@ const Hero = () => {
           {/* Text Content */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8 z-10">
             <div className="animate-slideUp">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif text-white mb-4 tracking-wide">
-                FLOW WITH INTENTION
+              <h2 className="text-5xl sm:text-6xl md:text-7xl font-light text-white mb-6 tracking-[0.15em]">
+                ELEVATE YOUR PRACTICE
               </h2>
-              <p className="text-lg sm:text-xl text-white mb-8 font-light tracking-wide">
-                Mindful movement, beautiful design
+              <p className="text-base sm:text-lg text-white/90 mb-10 font-light tracking-[0.2em] uppercase">
+                Premium Pilates & Studio Wear
               </p>
-              <button className="bg-white text-gray-900 px-8 sm:px-12 py-3 sm:py-4 text-sm font-semibold tracking-widest hover:bg-gray-100 hover:shadow-lg hover:scale-105 transition-all active:scale-95">
-                DISCOVER THE COLLECTION
+              <button className="bg-white text-gray-900 px-10 sm:px-14 py-3.5 sm:py-4 text-xs font-medium tracking-[0.3em] uppercase hover:bg-gray-100 transition-all duration-300">
+                Shop Collection
               </button>
             </div>
           </div>

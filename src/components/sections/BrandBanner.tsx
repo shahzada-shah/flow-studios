@@ -61,11 +61,16 @@ export const BrandBanner = () => {
 
           {/* Right Image */}
           <div
-            className={`relative bg-gray-200 transition-all duration-1000 delay-300 ${
+            className={`relative bg-gray-200 transition-all duration-1000 delay-300 overflow-hidden ${
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
             }`}
           >
-            <img src="/images/products/featured/mockup_feature_01.png" alt="Flow Studios banner" className="absolute inset-0 w-full h-full object-cover" />
+            <img 
+              src="/images/brand/brand_1.png" 
+              alt="Flow Studios banner" 
+              className="absolute inset-0 w-full h-full object-cover object-center"
+              style={{ objectPosition: 'center 20%' }}
+            />
             <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-gray-300/20" />
           </div>
         </div>

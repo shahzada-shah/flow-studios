@@ -69,6 +69,18 @@
     }
   }
 
+  /* Elegant modal slide in from center */
+  @keyframes modalSlideIn {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
   /* Slide up animation for modal exit */
   @keyframes slideUpOut {
     from {

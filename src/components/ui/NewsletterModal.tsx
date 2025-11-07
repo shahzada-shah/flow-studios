@@ -67,23 +67,9 @@ export const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
           {/* Newsletter Hero Image - 800x800px recommended */}
           <div className="relative bg-gray-100 overflow-hidden">
             <img
-              src="/images/modals/newsletter-hero.jpg"
+              src="/images/modals/modal_01.png"
               alt="Flow Studios - Mindful Movement"
               className="w-full h-full object-cover"
-              onError={(e) => {
-                // Fallback to placeholder if image not found
-                e.currentTarget.style.display = 'none'
-                const parent = e.currentTarget.parentElement
-                if (parent) {
-                  parent.innerHTML = `
-                    <div class="w-full h-full flex items-center justify-center p-12">
-                      <svg class="w-32 h-32 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
-                      </svg>
-                    </div>
-                  `
-                }
-              }}
             />
           </div>
 

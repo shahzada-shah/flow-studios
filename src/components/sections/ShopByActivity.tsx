@@ -1,31 +1,35 @@
-import { ImageIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 interface ActivityCategory {
   id: number
   title: string
   image: string
   href: string
+  activity: string
 }
 
 const categories: ActivityCategory[] = [
   {
     id: 1,
-    title: 'REFORMER ESSENTIALS',
-    image: '/images/hero/hero-left.png',
-    href: '#reformer',
+    title: 'PILATES PERFORMANCE',
+    image: '/images/products/featured/mockup_feature_05.png',
+    href: '/shop?activity=Pilates',
+    activity: 'Pilates',
   },
   {
     id: 2,
-    title: 'PILATES PERFORMANCE',
-    image: '/images/hero/hero-main.png',
-    href: '#pilates',
+    title: 'REFORMER ESSENTIALS',
+    image: '/images/products/featured/mockup_feature_06.png',
+    href: '/shop?activity=Reformer',
+    activity: 'Reformer',
   },
   {
     id: 3,
     title: 'STUDIO STREETSTYLE',
-    image: '/images/hero/hero-right.png',
-    href: '#streetstyle',
+    image: '/images/products/featured/mockup_feature_07.png',
+    href: '/shop?activity=Lifestyle',
+    activity: 'Lifestyle',
   },
 ]
 
@@ -66,9 +70,9 @@ export const ShopByActivity = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {categories.map((category, index) => (
-          <a
+          <Link
             key={category.id}
-            href={category.href}
+            to={category.href}
             className={`group relative overflow-hidden bg-gray-200 aspect-[3/4] rounded-sm transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
@@ -77,30 +81,22 @@ export const ShopByActivity = () => {
             }}
           >
             {/* Image */}
-            {category.image ? (
-              <img src={category.image} alt={category.title} className="absolute inset-0 w-full h-full object-cover" />
-            ) : null}
+            <img 
+              src={category.image} 
+              alt={category.title} 
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+            />
 
-            <div className="absolute inset-0 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
-              <div className="flex flex-col items-center gap-4 text-gray-400">
-                <div className="border-4 border-dashed border-gray-400 rounded-lg p-8">
-                  <ImageIcon className="w-16 h-16" strokeWidth={1.5} />
-                </div>
-                <div className="text-center">
-                  <p className="text-lg font-medium tracking-wider">ACTIVITY IMAGE</p>
-                  <p className="text-sm tracking-wide mt-1">800 × 1000</p>
-                </div>
-              </div>
-            </div>
+            {/* Dark overlay on hover */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 group-hover:via-black/30 transition-all duration-500" />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
+            {/* Title */}
             <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
               <h3 className="text-2xl md:text-3xl font-serif tracking-wide text-white text-center font-light">
                 {category.title}
               </h3>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </section>

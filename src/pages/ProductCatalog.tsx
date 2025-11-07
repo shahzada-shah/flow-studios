@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { FilterPanel } from '../components/products/FilterPanel'
 import { ProductCard } from '../components/products/ProductCard'
+import { QuickBuyModal } from '../components/products/QuickBuyModal'
 import { NewsletterModal } from '../components/ui/NewsletterModal'
+import { useToast } from '../context/ToastContext'
 import type { Product, ProductFilters } from '../types/product'
 import { PRODUCTS } from '../data/products'
 
@@ -11,6 +13,10 @@ const MODAL_DELAY = 4000
 
 export const ProductCatalog = () => {
   const { category } = useParams<{ category: string }>()
+  const [searchParams] = useSearchParams()
+  const activityParam = searchParams.get('activity')
+  
+  const { showToast } = useToast()
   const [products, setProducts] = useState<Product[]>([])
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
   const [isFilterOpen, setIsFilterOpen] = useState(false)
@@ -20,12 +26,14 @@ export const ProductCatalog = () => {
     categories: category ? [category] : [],
     sizes: [],
     colors: [],
-    activities: [],
+    activities: activityParam ? [activityParam] : [],
     priceRange: null,
     sustainable: false,
     newArrivals: false,
     sortBy: 'newest',
   })
+  const [quickBuyProduct, setQuickBuyProduct] = useState<Product | null>(null)
+  const [isQuickBuyOpen, setIsQuickBuyOpen] = useState(false)
 
   useEffect(() => {
     fetchProducts()
@@ -50,6 +58,40 @@ export const ProductCatalog = () => {
   const handleNewsletterClose = () => {
     setIsNewsletterOpen(false)
     localStorage.setItem(NEWSLETTER_MODAL_KEY, 'true')
+  }
+
+  const handleQuickBuy = (product: Product) => {
+    setQuickBuyProduct(product)
+    setIsQuickBuyOpen(true)
+    
+    // Smooth scroll to center viewport where modal appears
+    if (typeof window !== 'undefined') {
+      setTimeout(() => {
+        const viewportHeight = window.innerHeight
+        const documentHeight = document.documentElement.scrollHeight
+        const currentScroll = window.scrollY
+        
+        // Calculate the middle of the document
+        const documentMiddle = documentHeight / 2 - viewportHeight / 2
+        
+        // Only scroll if we're not already near the center
+        if (Math.abs(currentScroll - documentMiddle) > 100) {
+          window.scrollTo({
+            top: Math.max(0, documentMiddle),
+            behavior: 'smooth'
+          })
+        }
+      }, 100)
+    }
+  }
+
+  const handleQuickBuyClose = () => {
+    setIsQuickBuyOpen(false)
+    setQuickBuyProduct(null)
+  }
+
+  const handleLoadMore = () => {
+    showToast('No additional products are available right now. Check back soon.', 'success')
   }
 
   const fetchProducts = async () => {
@@ -124,6 +166,11 @@ export const ProductCatalog = () => {
   return (
     <div className="min-h-screen bg-white">
       <NewsletterModal isOpen={isNewsletterOpen} onClose={handleNewsletterClose} />
+      <QuickBuyModal
+        isOpen={isQuickBuyOpen}
+        product={quickBuyProduct}
+        onClose={handleQuickBuyClose}
+      />
 
       <FilterPanel
         isOpen={isFilterOpen}
@@ -184,13 +231,17 @@ export const ProductCatalog = () => {
           <>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
               {filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product.id} product={product} onQuickBuy={handleQuickBuy} />
               ))}
             </div>
 
             {filteredProducts.length >= 12 && (
               <div className="flex justify-center">
-                <button className="px-16 py-4 border border-gray-900 text-gray-900 text-sm font-medium tracking-wider hover:bg-gray-900 hover:text-white transition-all duration-200">
+                <button
+                  type="button"
+                  onClick={handleLoadMore}
+                  className="px-16 py-4 border border-gray-900 text-gray-900 text-sm font-medium tracking-wider hover:bg-gray-900 hover:text-white transition-all duration-200"
+                >
                   LOAD MORE
                 </button>
               </div>

@@ -102,9 +102,20 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-[1400px] mx-auto px-8 py-6">
-          <div className="flex items-center justify-between">
+      <div className="sticky top-0 z-40">
+        <div className="bg-[#f0efe9] text-gray-900">
+          <div className="max-w-[1400px] mx-auto px-8">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-2 py-3 text-[0.7rem] md:text-xs tracking-[0.28em] uppercase">
+              <span className="font-medium">Complimentary Shipping</span>
+              <span className="hidden md:inline text-gray-500">•</span>
+              <span className="tracking-[0.2em] text-gray-600">Enjoy delivery on all Flow Studios orders over $150</span>
+            </div>
+          </div>
+        </div>
+
+        <header className="bg-white border-b border-gray-200">
+          <div className="max-w-[1400px] mx-auto px-8 py-6">
+            <div className="flex items-center justify-between">
             <button
               className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
               onClick={openMobileMenu}
@@ -181,9 +192,10 @@ const Header = () => {
                 )}
               </button>
             </nav>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      </div>
 
       <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
       <CartPanel isOpen={isCartOpen} onClose={closeCart} />
