@@ -75,8 +75,8 @@ export const WishlistPanel = ({ isOpen, onClose }: WishlistPanelProps) => {
   return (
     <SlideOutPanel isOpen={isOpen} onClose={onClose} title={`Wishlist (${wishlistProducts.length})`}>
       <div className="flex flex-col h-full">
-        <div className="flex-1 overflow-y-auto px-6 py-4 min-h-0">
-          <div className="space-y-4">
+        <div className="flex-1 overflow-y-auto px-6 py-6 min-h-0">
+          <div className="space-y-4 pb-2">
             {wishlistProducts.map((product) => (
               <div
                 key={product.id}

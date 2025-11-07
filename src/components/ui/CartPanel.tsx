@@ -56,8 +56,8 @@ export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
   return (
     <SlideOutPanel isOpen={isOpen} onClose={onClose} title={`Shopping Bag (${cartCount})`}>
       <div className="flex flex-col h-full">
-        <div className="flex-1 overflow-y-auto px-6 py-4 min-h-0">
-          <div className="space-y-6 pb-4">
+        <div className="flex-1 overflow-y-auto px-6 py-6 min-h-0">
+          <div className="space-y-6 pb-2">
             {cartItems.map((item) => (
               <div key={`${item.product.id}-${item.size}`} className="flex gap-4">
                 <div className="w-24 h-32 bg-gray-200 rounded-sm overflow-hidden flex-shrink-0">
