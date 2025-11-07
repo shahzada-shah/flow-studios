@@ -27,6 +27,7 @@ import { ImageIcon } from 'lucide-react'
 
 export interface Order {
   id: string
+  productId: string
   productName: string
   color: string
   size: string

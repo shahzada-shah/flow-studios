@@ -19,6 +19,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
+import { useCart } from '../context/CartContext'
 import { AccountSidebar } from '../components/account/AccountSidebar'
 import { OrdersList } from '../components/account/OrdersList'
 import { DetailsForm } from '../components/account/DetailsForm'
@@ -33,6 +34,7 @@ type Tab = 'details' | 'orders' | 'wishlist' | 'addresses'
 const mockOrders: Order[] = [
   {
     id: '45678',
+    productId: PRODUCTS[0].id,
     productName: PRODUCTS[0].name, // Serenity High-Rise Legging
     color: PRODUCTS[0].color,
     size: 'S',
@@ -44,6 +46,7 @@ const mockOrders: Order[] = [
   },
   {
     id: '55689',
+    productId: PRODUCTS[2].id,
     productName: PRODUCTS[2].name, // Essential Scoop Tank
     color: PRODUCTS[2].color,
     size: 'S',
@@ -55,6 +58,7 @@ const mockOrders: Order[] = [
   },
   {
     id: '52795',
+    productId: PRODUCTS[1].id,
     productName: PRODUCTS[1].name, // Flow Support Sport Bra
     color: PRODUCTS[1].color,
     size: 'S',
@@ -71,6 +75,7 @@ export const Account = () => {
   const navigate = useNavigate()
   const { signOut } = useAuth()
   const { showToast } = useToast()
+  const { addToCart } = useCart()
 
   const handleLogout = async () => {
     try {
@@ -83,7 +88,23 @@ export const Account = () => {
   }
 
   const handleReorder = (orderId: string) => {
-    showToast(`Reordering item from order #${orderId}`, 'success')
+    // Find the order by ID
+    const order = mockOrders.find(o => o.id === orderId)
+    if (!order) return
+
+    // Find the product by ID
+    const product = PRODUCTS.find(p => p.id === order.productId)
+    if (!product) {
+      showToast('Product not found', 'error')
+      return
+    }
+
+    // Add to cart with the original quantity
+    for (let i = 0; i < order.quantity; i++) {
+      addToCart(product, order.size)
+    }
+
+    showToast(`Added ${order.productName} to bag`, 'success')
   }
 
   const handleSaveDetails = (data: unknown) => {
