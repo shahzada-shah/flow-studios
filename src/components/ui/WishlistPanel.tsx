@@ -1,5 +1,6 @@
 import { Heart, X, ImageIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { SlideOutPanel } from './SlideOutPanel'
 import { useWishlist } from '../../context/WishlistContext'
 import { useCart } from '../../context/CartContext'
@@ -28,6 +29,20 @@ export const WishlistPanel = ({ isOpen, onClose }: WishlistPanelProps) => {
   const { products: wishlistProducts, removeFromWishlist, clearWishlist } = useWishlist()
   const { addToCart } = useCart()
   const { showToast } = useToast()
+
+  // Close drawer on page scroll
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleScroll = () => {
+      onClose()
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [isOpen, onClose])
 
   const handleAddAllToBag = () => {
     let addedCount = 0

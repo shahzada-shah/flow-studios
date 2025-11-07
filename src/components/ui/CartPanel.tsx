@@ -1,5 +1,6 @@
 import { ShoppingBag, X, Plus, Minus, ImageIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { SlideOutPanel } from './SlideOutPanel'
 import { useCart } from '../../context/CartContext'
 
@@ -25,6 +26,20 @@ interface CartPanelProps {
 export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
   const navigate = useNavigate()
   const { cartItems, removeFromCart, updateQuantity, cartTotal, cartCount } = useCart()
+
+  // Close drawer on page scroll
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleScroll = () => {
+      onClose()
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [isOpen, onClose])
 
   const handleCheckout = () => {
     onClose()
