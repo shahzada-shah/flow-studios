@@ -2,6 +2,8 @@
  * Hero section with three-panel layout and centered call-to-action
  * Features three hero images with text overlay on center panel
  */
+import { getImagePath } from '../../utils/assets'
+
 const Hero = () => {
   return (
     <section className="relative w-full h-[calc(100vh-100px)] overflow-hidden">
@@ -9,7 +11,7 @@ const Hero = () => {
         {/* Left Panel Image */}
         <div className="relative overflow-hidden h-full bg-gray-200">
           <img
-            src="/images/hero/hero-left.png"
+            src={getImagePath('images/hero/hero-left.png')}
             alt="Flow Studios - Mindful Movement"
             className="w-full h-full object-cover blur-[0.5px]"
             onError={(e) => {
@@ -22,7 +24,7 @@ const Hero = () => {
         <div className="relative overflow-hidden h-full bg-gray-200">
           {/* Hero Main Image */}
           <img
-            src="/images/hero/hero-main.png"
+            src={getImagePath('images/hero/hero-main.png')}
             alt="Flow with Intention - Mindful Movement"
             className="w-full h-full object-cover"
             onError={(e) => {
@@ -55,7 +57,7 @@ const Hero = () => {
         {/* Right Panel Image */}
         <div className="relative overflow-hidden h-full bg-gray-200">
           <img
-            src="/images/hero/hero-right.png"
+            src={getImagePath('images/hero/hero-right.png')}
             alt="Flow Studios - Mindful Movement"
             className="w-full h-full object-cover blur-[0.5px]"
             onError={(e) => {

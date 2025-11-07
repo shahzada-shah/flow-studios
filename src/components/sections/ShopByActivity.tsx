@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { getImagePath } from '../../utils/assets'
 
 interface ActivityCategory {
   id: number
@@ -13,21 +14,21 @@ const categories: ActivityCategory[] = [
   {
     id: 1,
     title: 'PILATES PERFORMANCE',
-    image: '/images/products/featured/mockup_feature_05.png',
+    image: getImagePath('images/products/featured/mockup_feature_05.png'),
     href: '/shop?activity=Pilates',
     activity: 'Pilates',
   },
   {
     id: 2,
     title: 'REFORMER ESSENTIALS',
-    image: '/images/products/featured/mockup_feature_06.png',
+    image: getImagePath('images/products/featured/mockup_feature_06.png'),
     href: '/shop?activity=Reformer',
     activity: 'Reformer',
   },
   {
     id: 3,
     title: 'STUDIO STREETSTYLE',
-    image: '/images/products/featured/mockup_feature_07.png',
+    image: getImagePath('images/products/featured/mockup_feature_07.png'),
     href: '/shop?activity=Lifestyle',
     activity: 'Lifestyle',
   },

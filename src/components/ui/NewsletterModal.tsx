@@ -1,6 +1,7 @@
 import { X } from 'lucide-react'
 import { useState, FormEvent, useEffect } from 'react'
 import { useToast } from '../../context/ToastContext'
+import { getImagePath } from '../../utils/assets'
 
 interface NewsletterModalProps {
   isOpen: boolean
@@ -67,7 +68,7 @@ export const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
           {/* Newsletter Hero Image - 800x800px recommended */}
           <div className="relative bg-gray-100 overflow-hidden">
             <img
-              src="/images/modals/modal_01.png"
+              src={getImagePath('images/modals/modal_01.png')}
               alt="Flow Studios - Mindful Movement"
               className="w-full h-full object-cover"
             />

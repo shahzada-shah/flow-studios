@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { getImagePath } from '../../utils/assets'
 
 export const BrandBanner = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -66,7 +67,7 @@ export const BrandBanner = () => {
             }`}
           >
             <img 
-              src="/images/brand/brand_1.png" 
+              src={getImagePath('images/brand/brand_1.png')} 
               alt="Flow Studios banner" 
               className="absolute inset-0 w-full h-full object-cover object-center"
               style={{ objectPosition: 'center 20%' }}

@@ -1,5 +1,6 @@
 import { Clock } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { getImagePath } from '../../utils/assets'
 
 interface BlogPost {
   id: number
@@ -18,7 +19,7 @@ const blogPosts: BlogPost[] = [
     description:
       'Discover how embracing movement can boost self-love and body confidence every day.',
     readTime: '5 mins',
-    image: '/images/blog/blog_left_01.png',
+    image: getImagePath('images/blog/blog_left_01.png'),
   },
   {
     id: 2,
@@ -27,7 +28,7 @@ const blogPosts: BlogPost[] = [
     description:
       'Unlock the benefits of mindful breathing to reduce stress and improve focus.',
     readTime: '10 min',
-    image: '/images/blog/blog_center_01.png',
+    image: getImagePath('images/blog/blog_center_01.png'),
   },
   {
     id: 3,
@@ -36,7 +37,7 @@ const blogPosts: BlogPost[] = [
     description:
       'Discover how intentional movement can bring harmony to your mind and body.',
     readTime: '5 mins',
-    image: '/images/blog/blog_right_01.png',
+    image: getImagePath('images/blog/blog_right_01.png'),
   },
 ]
 
