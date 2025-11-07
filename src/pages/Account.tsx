@@ -25,39 +25,44 @@ import { DetailsForm } from '../components/account/DetailsForm'
 import { WishlistTab } from '../components/account/WishlistTab'
 import { AddressesTab } from '../components/account/AddressesTab'
 import type { Order } from '../components/account/OrderCard'
+import { PRODUCTS } from '../data/products'
 
 type Tab = 'details' | 'orders' | 'wishlist' | 'addresses'
 
+// Map real products to order history
 const mockOrders: Order[] = [
   {
     id: '45678',
-    productName: 'UltraFlex Leggings',
-    color: 'Grey',
+    productName: PRODUCTS[0].name, // Serenity High-Rise Legging
+    color: PRODUCTS[0].color,
     size: 'S',
     quantity: 1,
     date: 'Feb 21, 2025',
     status: 'Delivered',
-    totalPrice: 90,
+    totalPrice: PRODUCTS[0].price,
+    imageUrl: PRODUCTS[0].image_url || undefined,
   },
   {
     id: '55689',
-    productName: 'Crop Legging',
-    color: 'Black',
+    productName: PRODUCTS[2].name, // Essential Scoop Tank
+    color: PRODUCTS[2].color,
     size: 'S',
     quantity: 1,
     date: 'Jan 05, 2025',
     status: 'Delivered',
-    totalPrice: 180,
+    totalPrice: PRODUCTS[2].price,
+    imageUrl: PRODUCTS[2].image_url || undefined,
   },
   {
     id: '52795',
-    productName: 'Slim Flare Leggins',
-    color: 'Black',
+    productName: PRODUCTS[1].name, // Flow Support Sport Bra
+    color: PRODUCTS[1].color,
     size: 'S',
     quantity: 1,
     date: 'Dec 18, 2024',
     status: 'Delivered',
-    totalPrice: 95,
+    totalPrice: PRODUCTS[1].price,
+    imageUrl: PRODUCTS[1].image_url || undefined,
   },
 ]
 
